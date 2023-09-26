@@ -1,9 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
 import Swal from 'sweetalert2'
-
-import { FormControlLabel, Radio, RadioGroup } from '@mui/material'
 
 import { axiosInstance } from '../../../../services/core/axios'
 
@@ -14,6 +11,7 @@ const SellerRegister = () => {
   const [validated, setValidated] = useState(false)
 
   const [form, setForm] = useState({
+    role:"SELLER",
     name: {
       first_name: '',
       last_name: '',
@@ -22,9 +20,6 @@ const SellerRegister = () => {
     password: '',
     phone: '',
     address: '',
-    dob: '',
-    nic: '',
-    gender: '',
   })
 
   //handleSubmit
@@ -36,19 +31,21 @@ const SellerRegister = () => {
     if (inForm.checkValidity() === false) {
       setValidated(true)
     } else {
+      console.log(form)
       //if the form is valid send the user entered data
       axiosInstance
-        .post('/auth/register', form)
+        .post('/auth/register', { user:form })
         .then((res) => {
-          if (res.status === 200) {
+          if (res.status === 201) {
             Swal.fire({
               icon: 'success',
-              title: 'Request successfully sent!',
+              title: 'Registration successfull!',
               showConfirmButton: false,
               timer: 2000,
             })
             setForm({})
           }
+          navigate('/login')
         })
         .catch(function (error) {
           // handle error
@@ -145,57 +142,9 @@ const SellerRegister = () => {
                     className="tw-block tw-w-full tw-p-3 tw-mt-2 tw-text-gray-700 tw-bg-gray-200 tw-appearance-none tw-focus:outline-none tw-focus:bg-gray-300 tw-focus:shadow-inner"
                     required
                   />
-                  <label
-                    for="dateOfBirth"
-                    className="tw-block tw-mt-2 tw-text-xs tw-font-semibold tw-text-gray-600 tw-uppercase"
-                  >
-                    Date of Birth
-                  </label>
-                  <input
-                    id="dateOfBirth"
-                    type="text"
-                    name="dob"
-                    placeholder="john.doe@company.com"
-                    onChange={handleInput}
-                    autoComplete="dateOfBirth"
-                    className="tw-block tw-w-full tw-p-3 tw-mt-2 tw-text-gray-700 tw-bg-gray-200 tw-appearance-none tw-focus:outline-none tw-focus:bg-gray-300 tw-focus:shadow-inner"
-                    required
-                  />
+
                 </div>
                 <div className="">
-                  <label
-                    for="age"
-                    className="tw-block tw-mt-2 tw-text-xs tw-font-semibold tw-text-gray-600 tw-uppercase"
-                  >
-                    Age
-                  </label>
-                  <input
-                    id="age"
-                    type="text"
-                    name="age"
-                    placeholder="23"
-                    autoComplete="age"
-                    onChange={handleInput}
-                    className="tw-block tw-w-full tw-p-3 tw-mt-2 tw-text-gray-700 tw-bg-gray-200 tw-appearance-none tw-focus:outline-none tw-focus:bg-gray-300 tw-focus:shadow-inner"
-                    required
-                  />
-
-                  <label
-                    for="nic"
-                    className="tw-block tw-mt-2 tw-text-xs tw-font-semibold tw-text-gray-600 tw-uppercase"
-                  >
-                    NIC
-                  </label>
-                  <input
-                    id="nic"
-                    type="text"
-                    name="nic"
-                    placeholder="********"
-                    autoComplete="new-nic"
-                    onChange={handleInput}
-                    className="tw-block tw-w-full tw-p-3 tw-mt-2 tw-text-gray-700 tw-bg-gray-200 tw-appearance-none tw-focus:outline-none tw-focus:bg-gray-300 tw-focus:shadow-inner"
-                    required
-                  />
                   <label
                     for="phone"
                     className="tw-block tw-mt-2 tw-text-xs tw-font-semibold tw-text-gray-600 tw-uppercase"
@@ -208,35 +157,6 @@ const SellerRegister = () => {
                     name="phone"
                     placeholder="0764376987"
                     autoComplete="phone"
-                    onChange={handleInput}
-                    className="tw-block tw-w-full tw-p-3 tw-mt-2 tw-text-gray-700 tw-bg-gray-200 tw-appearance-none tw-focus:outline-none tw-focus:bg-gray-300 tw-focus:shadow-inner"
-                    required
-                  />
-                  <label
-                    for="gender"
-                    className="tw-block tw-mt-2 tw-text-xs tw-font-semibold tw-text-gray-600 tw-uppercase"
-                  >
-                    Gender
-                  </label>
-
-                  <RadioGroup row>
-                    <FormControlLabel value="female" control={<Radio />} label="Female" />
-                    <FormControlLabel value="male" control={<Radio />} label="Male" />
-                  </RadioGroup>
-                </div>
-                <div className="tw-ml-8">
-                  <label
-                    for="address"
-                    className="tw-block tw-mt-2 tw-text-xs tw-font-semibold tw-text-gray-600 tw-uppercase"
-                  >
-                    Address
-                  </label>
-                  <input
-                    id="address"
-                    type="text"
-                    name="address"
-                    placeholder="Colombo, Sri Lanka"
-                    autoComplete="address"
                     onChange={handleInput}
                     className="tw-block tw-w-full tw-p-3 tw-mt-2 tw-text-gray-700 tw-bg-gray-200 tw-appearance-none tw-focus:outline-none tw-focus:bg-gray-300 tw-focus:shadow-inner"
                     required
@@ -274,17 +194,33 @@ const SellerRegister = () => {
                     required
                   />
                 </div>
+                <div className="tw-ml-8">
+                  <label
+                    for="address"
+                    className="tw-block tw-mt-2 tw-text-xs tw-font-semibold tw-text-gray-600 tw-uppercase"
+                  >
+                    Address
+                  </label>
+                  <input
+                    id="address"
+                    type="text"
+                    name="address"
+                    placeholder="Colombo, Sri Lanka"
+                    autoComplete="address"
+                    onChange={handleInput}
+                    className="tw-block tw-w-full tw-p-3 tw-mt-2 tw-text-gray-700 tw-bg-gray-200 tw-appearance-none tw-focus:outline-none tw-focus:bg-gray-300 tw-focus:shadow-inner"
+                    required
+                  />
+                  
+                </div>
               </div>
               <div>
                 <div className="tw-flex tw-flex-col tw-items-center tw-justify-center">
                   <button
-                    onClick={() => {
-                      navigate('/otp')
-                    }}
                     type="submit"
                     className="tw-w-5/12 tw-py-3 tw-mt-6 tw-font-medium tw-tracking-widest tw-text-white tw-uppercase tw-bg-[#383634] tw-shadow-lg tw-focus:outline-none tw-hover:bg-gray-900 tw-hover:shadow-none"
                   >
-                    Verify Your Account
+                    Register
                   </button>
                   <button
                     onClick={() => {
@@ -303,4 +239,5 @@ const SellerRegister = () => {
     </>
   )
 }
+
 export default SellerRegister

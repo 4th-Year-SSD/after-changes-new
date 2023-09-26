@@ -1,5 +1,5 @@
 # Base image
-FROM node:14-alpine
+FROM node:16.13.1
 
 # Create app directory
 WORKDIR /app
@@ -27,11 +27,10 @@ RUN yarn
 # Copy app files
 COPY . .
 
-# Build production app
-RUN yarn run build
+
 
 # Expose app port
-EXPOSE 3000
+EXPOSE 3001
 
 # Start app
-CMD ["yarn", "start"]
+CMD ["yarn", "dev"]

@@ -1,5 +1,11 @@
-import { axiosInstance as axios } from './core/axios'
+import axios from 'axios'
+export const axiosInstance = axios.create({
+  baseURL: `http://localhost:3001/api`,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+})
 
 export const createOrder = async (order) => {
-  return (await axios.post('/order/', order)).data
+  return (await axiosInstance.post('/order/', order)).data
 }

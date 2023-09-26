@@ -55,8 +55,16 @@ export default function ReviewCard(reviewDetails) {
 
   return (
     <>
-    <EditReviewCard isOpen={openEditDialog} onClose={() => setOpenEditDialog(false)} reviewDetails={reviewDetails.reviewDetails} />
-    <DeleteReviewCard isOpen={openDeleteDialog} onClose={() => setOpenDeleteDialog(false)} reviewDetails={reviewDetails.reviewDetails} />
+      <EditReviewCard
+        isOpen={openEditDialog}
+        onClose={() => setOpenEditDialog(false)}
+        reviewDetails={reviewDetails.reviewDetails}
+      />
+      <DeleteReviewCard
+        isOpen={openDeleteDialog}
+        onClose={() => setOpenDeleteDialog(false)}
+        reviewDetails={reviewDetails.reviewDetails}
+      />
       <Card
         sx={{
           minWidth: 275,
@@ -72,9 +80,9 @@ export default function ReviewCard(reviewDetails) {
               </Grid>
               <Grid item xs={10}>
                 <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                  {reviewDetails.reviewDetails.user.name?.first_name +
+                  {reviewDetails.reviewDetails.user?.name?.first_name +
                     ' ' +
-                    reviewDetails.reviewDetails.user.name?.last_name}
+                    reviewDetails.reviewDetails.user?.name?.last_name}
                 </Typography>
                 <Typography sx={{ fontSize: 10 }} color="text.secondary" gutterBottom>
                   {formatDate(reviewDetails.reviewDetails.updatedAt)}

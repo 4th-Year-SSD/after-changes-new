@@ -1,11 +1,11 @@
 import Admin from '../models/admin.model'
 import logger from '../utils/logger'
-
+// create admin repository
 export const createAdmin = async (admin) => {
   const adminMade = (await new Admin(admin).save()).toObject()
   return adminMade
 }
-
+// get all admins repository
 export const getAllAdmins = async ({ sort = {}, filter = {}, page}) => {
   const options = {
     page,
@@ -13,10 +13,10 @@ export const getAllAdmins = async ({ sort = {}, filter = {}, page}) => {
       locale: 'en'
     }
   }
-
+  // if sort is not empty
   if (Object.keys(sort).length > 0) options.sort = sort
 
-
+  // if filter is not empty
   const aggregateQuery = () =>
     Admin.aggregate([
       {
@@ -30,7 +30,7 @@ export const getAllAdmins = async ({ sort = {}, filter = {}, page}) => {
     throw err
   })
 }
-
+// get one admin repository
 export const getOneAdmin = async (filters, returnPassword = false) => {
   const admin = await Admin.findOne(filters).lean()
   if (!admin) return null
@@ -38,7 +38,7 @@ export const getOneAdmin = async (filters, returnPassword = false) => {
   if (!returnPassword) delete admin.password
   return admin
 }
-
+// update admin repository
 export const findOneAndUpdateAdmin = async (filters, data) => {
   const admin = await Admin.findOneAndUpdate(filters, data, { new: true }).lean()
   if (!admin) return null
@@ -46,7 +46,7 @@ export const findOneAndUpdateAdmin = async (filters, data) => {
   delete admin.password
   return admin
 }
-
+// delete admin repository
 export const findOneAndRemoveAdmin = async (filters) => {
   return await Admin.findOneAndRemove(filters)
 }

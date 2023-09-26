@@ -7,42 +7,43 @@ export default function CartItem(props) {
   const { cart, handleRemoveProduct } = props
 
   const config = {
-    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+    headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` },
   }
 
-const handleChange = (action, product, quantity) => {
-  let prevQuantity = quantity
-  setQuantity((quantity) => {
-    console.log('quantity:', quantity)
-    if (action === 'inc') {
-      prevQuantity = quantity + 1
-      return prevQuantity
-    } else if (action === 'dec') {
-      if (quantity <= 1) {
-        return 1
-      } else {
-        prevQuantity = quantity - 1
+  const handleChange = (action, product, quantity) => {
+    let prevQuantity = quantity
+    setQuantity((quantity) => {
+      console.log('quantity:', quantity)
+      if (action === 'inc') {
+        prevQuantity = quantity + 1
         return prevQuantity
+      } else if (action === 'dec') {
+        if (quantity <= 1) {
+          return 1
+        } else {
+          prevQuantity = quantity - 1
+          return prevQuantity
+        }
       }
+    })
+    const payload = {
+      product,
+      quantity: prevQuantity,
     }
-  })
-  const payload = {
-    product,
-    quantity: prevQuantity,
+    axios
+      .put(`http://localhost:3001/api/cart/642d7b2fadc38c896ac0a75e`, payload, config)
+      .then((response) => {
+        console.log(response.data)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
-  axios
-    .put(`http://localhost:3001/api/cart/642d7b2fadc38c896ac0a75e`, payload, config)
-    .then((response) => {
-      console.log(response.data)
-    })
-    .catch((error) => {
-      console.log(error)
-    })
-}
 
   return (
     <>
-      {cart && cart?.map((ct) => (
+      {cart &&
+        cart?.map((ct) => (
           <div className="cards tw-max-w-3xl tw-mx-auto tw-p-3 tw-bg-white tw-border tw-border-gray-200 tw-rounded-lg tw-shadow tw-hover:bg-gray-100 tw-dark:bg-gray-800 tw-dark:border-gray-700 tw-dark:hover:bg-gray-700 tw-flex tw-spacebetween tw-mt-3">
             <div className="image_box tw-p-6 tw-mr-15 tw-ml-5">
               <img

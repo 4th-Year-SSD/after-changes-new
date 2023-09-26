@@ -3,16 +3,41 @@ const express = require("express");
 import cors from "cors";
 import routes from "./routes/index.routes.js";
 import connectDB from "./database";
+import { generateToken } from "./utils/csrf.js";
+import cookieParser from "cookie-parser";
+import session from "express-session";
 import http from "http";
 import { Server } from "socket.io";
 import Feed from "./models/feed.model.js";
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
 
 app.use(express.json({ limit: "1mb" }));
 app.get("/", (req, res) =>
   res.status(200).json({ message: "Redivivus Server Up and Running" })
 );
+app.use(
+  session({
+    secret: "some-secret-key", // Change this to a real secret in production
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }, // Set secure to true in production if using HTTPS
+  })
+);
+app.use(cookieParser(process.env.COOKIES_SECRET));
+app.get("/csrf", (req, res) => {
+  const token = generateToken(req, res);
+
+  res.status(200).json({
+    message: "csrf received successfully",
+    token: token,
+  });
+});
 app.use("/api", routes);
 connectDB();
 
@@ -23,6 +48,7 @@ const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
     origin: process.env.CLIENT_URL,
+    credentials: true,
   },
 });
 

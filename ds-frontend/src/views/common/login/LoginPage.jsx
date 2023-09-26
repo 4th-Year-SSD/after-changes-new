@@ -1,10 +1,12 @@
 import './login.css'
 import TopNav from '../../../components/topnav/TopNav'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom'
 import { axiosInstance } from '../../../services/core/axios'
-
+import { GoogleLogin, googleLogout } from '@react-oauth/google'
+import axios from 'axios'
+import jwt_decode from 'jwt-decode'
 export default function Login() {
   //email
   const [email, setEmail] = useState('')
@@ -22,23 +24,24 @@ export default function Login() {
       .then((res) => {
         if (res.status === 200) {
           //set localstorage
-        
+
           localStorage.setItem('role', res.data.data.user.role)
-          localStorage.setItem('token', res.data.data.access_token)
+          localStorage.setItem('access_token', res.data.data.access_token)
+
           localStorage.setItem('name', res.data.data.user.name.first_name)
           localStorage.setItem('email', res.data.data.user.email)
           localStorage.setItem('authenticated', true)
           localStorage.setItem('id', res.data.data.user._id)
           localStorage.setItem('user_id', res.data.data.user._id)
- 
+
           setEmail('')
           setPassword('')
-          
+
           if (res.data.data.user.role === 'SELLER') {
-               localStorage.setItem('id', res.data.data.user.seller._id)
+            localStorage.setItem('id', res.data.data.user.seller._id)
           }
           if (res.data.data.user.role === 'BUYER') {
-               localStorage.setItem('id', res.data.data.user.buyer._id)
+            localStorage.setItem('id', res.data.data.user.buyer._id)
           }
           //check the user role
           if (res.data.data.user.role === 'ADMIN') {
@@ -62,6 +65,65 @@ export default function Login() {
         // always executed
       })
   }
+  const createOrSignInGoogleUser = async (response) => {
+    const decoded = jwt_decode(response.credential)
+    const { family_name, given_name, picture, sub, email } = decoded
+    const user = {
+      name: {
+        first_name: family_name,
+        last_name: given_name,
+      },
+      email: email,
+      profilePic: picture,
+    }
+
+    axiosInstance
+      .post('/auth/google-sginin', user)
+      .then((res) => {
+        if (res.status === 201 || res.status === 200) {
+          console.log(res)
+
+          localStorage.setItem('role', res.data.data?.user?.role)
+          localStorage.setItem('access_token', res.data.data?.access_token)
+          //  localStorage.setItem('token', res.data.data?.token)
+          localStorage.setItem('name', res.data.data?.user?.name.first_name)
+          localStorage.setItem('email', res.data.data?.user?.email)
+          localStorage.setItem('authenticated', true)
+          localStorage.setItem('id', res.data.data?.user?._id)
+          localStorage.setItem('user_id', res.data.data?.user?._id)
+
+          if (res.data.data.user.role === 'SELLER') {
+            localStorage.setItem('id', res.data.data?.user?.seller._id)
+          }
+          if (res.data.data.user.role === 'BUYER') {
+            localStorage.setItem('id', res.data.data?.user?.buyer._id)
+          }
+          //check the user role
+          if (res.data.data?.user?.role === 'ADMIN') {
+            navigate('../admin/dashboard')
+          } else if (
+            res.data.data?.user?.role === 'SELLER' ||
+            res.data.data?.user?.role === 'BUYER'
+          ) {
+            navigate('../user/dashboard')
+          }
+        } else console.log(res.status)
+      })
+      .catch((error) => {
+        // handle error
+        Swal.fire({
+          icon: 'error',
+          title: 'Failed to login!',
+          showConfirmButton: false,
+          timer: 2000,
+        })
+        console.log(error)
+      })
+      .then(() => {
+        // always executed
+      })
+  }
+
 
   return (
     <>
@@ -121,10 +183,25 @@ export default function Login() {
               >
                 Sign in
               </button>
+              <span className="tw-w-full tw-flex tw-justify-center tw-mt-2">OR</span>
+
+              <div className="tw-w-full  tw-mt-2 tw-font-medium tw-tracking-widest tw-text-white  tw-bg-white tw-shadow-lg tw-focus:outline-none tw-hover:bg-gray-900 tw-hover:shadow-none">
+                <GoogleLogin
+                  accountchooserPromptEnabled={false}
+                  onSuccess={(response) => {
+                    createOrSignInGoogleUser(response)
+                  }}
+                  onError={(response) => {
+                    console.log('erros')
+                  }}
+                  width="5000"
+                />
+              </div>
+
               <div className="tw-text-center">
                 <button
                   onClick={() => {
-                    navigate('/patient-registration')
+                    navigate('/registration-intro')
                   }}
                   class="tw-text-center tw-mt-4 tw-text-base tw-text-gray-500 tw-cursor-pointer tw-hover:text-black"
                 >

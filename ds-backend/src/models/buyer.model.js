@@ -23,21 +23,6 @@ const BuyerSchema = new mongoose.Schema({
       type: String,
     },
   },
-  earnings: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-    },
-  ],
-  pickup_requests: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-    },
-  ],
-  subscribed_companies: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-    },
-  ],
 });
 
 BuyerSchema.plugin(aggregatePaginate);

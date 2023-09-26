@@ -19,12 +19,12 @@ import React from 'react'
 import socketIOClient from 'socket.io-client'
 import { Menu, Dropdown, message, Badge } from 'antd'
 
-export const socket = socketIOClient('http://localhost:3002')
+//export const socket = socketIOClient('http://localhost:3002')
 function TopNav() {
   const [noOfItems, setNoOfItems] = React.useState(0)
 
   const config = {
-    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+    headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` },
   }
 
   //get no of items in the cart
@@ -32,8 +32,9 @@ function TopNav() {
   //notification
   const fetchCartCount = () => {
     if (localStorage.getItem('role') === 'BUYER') {
+      const id = localStorage.getItem('user_id')
       axios
-        .get('http://localhost:3004/api/cart/getCartCount/642d7b2fadc38c896ac0a75e', config)
+        .get(`http://localhost:3001/api/cart/getCartCount/${id}`, config)
         .then((response) => {
           setNoOfItems(response.data.count)
         })
@@ -43,22 +44,21 @@ function TopNav() {
     }
   }
   useEffect(() => {
-    fetchCartCount()
+    //fetchCartCount()
   }, [])
 
   const [feeds, setFeeds] = useState([])
   const [isNewFeed, setIsNewFeed] = useState(false)
 
   useEffect(() => {
-    socket.emit('initial_data')
-    socket.on('get_data', getData)
-    socket.on('change_data', changeData)
-    return () => {
-      socket.off('get_data')
-      socket.off('change_data')
-    }
+    // socket.emit('initial_data')
+    // socket.on('get_data', getData)
+    // socket.on('change_data', changeData)
+    // return () => {
+    //   socket.off('get_data')
+    //   socket.off('change_data')
+    // }
   }, [])
-  
 
   const getData = (feeds) => {
     if (feeds.length && feeds.some((feed) => feed.read === false)) {
@@ -69,14 +69,14 @@ function TopNav() {
     setFeeds(feeds.filter((feed) => feed.userID === localStorage.getItem('id')))
   }
 
-  const changeData = () => socket.emit('initial_data')
+ // const changeData = () => socket.emit('initial_data')
 
   const handleClick = ({ key }) => {
     message.info(`Clicked on item ${key}`)
   }
 
   const handleDropdownClick = () => {
-    socket.emit('check_all_notifications')
+   // socket.emit('check_all_notifications')
   }
 
   const menu = (
@@ -129,9 +129,6 @@ function TopNav() {
             <div className="collapse nav-categories" id="categories-menu">
               <ul className="list-unstyled">
                 <li>
-                  <NavLink to="/orderview">My Orders</NavLink>
-                </li>
-                <li>
                   <NavLink to="/category2">Category 2</NavLink>
                 </li>
                 <li>
@@ -150,14 +147,7 @@ function TopNav() {
 
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
-          {/*<Nav className="me-auto">*/}
-          {/*  <Nav.Link href="/">Home</Nav.Link>*/}
-          {/*  <Nav.Link href="/about">About</Nav.Link>*/}
-          {/*  <Nav.Link href="/buyers">Buyers</Nav.Link>*/}
-          {/*  <Nav.Link href="#contact-us">Contact</Nav.Link>*/}
-          {/*</Nav>*/}
-
-          {!localStorage.getItem('token') && (
+          {!localStorage.getItem('access_token') && (
             <Nav className="m-auto me-0">
               <Nav.Link href="/login">
                 <Button
@@ -174,7 +164,7 @@ function TopNav() {
               </Nav.Link>
             </Nav>
           )}
-          {localStorage.getItem('token') && (
+          {localStorage.getItem('access_token') && (
             <div className="ms-auto me-3">
               <div className="d-flex align-items-center">
                 {/* <FontAwesomeIcon icon={faBell} /> */}
@@ -193,6 +183,21 @@ function TopNav() {
                     )}
                   </Dropdown>
                 </div>
+                {localStorage.getItem('role') === 'BUYER' ? (
+                  <div className="ms-5 me-3 d-flex justify-content">
+                    <Link to="/shoppingcart">
+                      <div className="cart">
+                        <FontAwesomeIcon icon={faShoppingCart} />
+                        <span>{noOfItems}</span>
+                      </div>
+                    </Link>
+                    <div className="ms-2">
+                      <small className="text-muted fw-bold">Cart</small>
+                    </div>
+                  </div>
+                ) : (
+                  <></>
+                )}
                 <div className="btn-group ms-5">
                   <button
                     type="button"
@@ -209,17 +214,17 @@ function TopNav() {
                         <a className="dropdown-item" href="/admin/dashboard">
                           Profile
                         </a>
+                      ) : localStorage.getItem('role') == 'BUYER' ? (
+                        <a className="dropdown-item" href="/user/orderview">
+                          Profile
+                        </a>
                       ) : (
                         <a className="dropdown-item" href="/user/dashboard">
                           Profile
                         </a>
                       )}
                     </li>
-                    <li>
-                      <a className="dropdown-item" href="#">
-                        Setting
-                      </a>
-                    </li>
+
                     <li>
                       <hr className="dropdown-divider" />
                     </li>
@@ -234,21 +239,6 @@ function TopNav() {
             </div>
           )}
         </Navbar.Collapse>
-        {localStorage.getItem('role') === 'BUYER' ? (
-          <div className="ms-5 me-3 d-flex justify-content">
-            <Link to="/shoppingcart">
-              <div className="cart">
-                <FontAwesomeIcon icon={faShoppingCart} />
-                <span>{noOfItems}</span>
-              </div>
-            </Link>
-            <div className="ms-2">
-              <small className="text-muted fw-bold">Cart</small>
-            </div>
-          </div>
-        ) : (
-          <></>
-        )}
       </Container>
     </Navbar>
   )

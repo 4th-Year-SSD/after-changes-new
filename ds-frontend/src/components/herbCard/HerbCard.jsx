@@ -4,6 +4,8 @@ import './herbCard.scoped.css'
 import Button from 'react-bootstrap/Button'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { addItemToCart } from '../../services/cartService'
+
 export default function HerbCard({ product }) {
   const navigate = useNavigate()
   useEffect(() => {
@@ -55,7 +57,7 @@ export default function HerbCard({ product }) {
         <Row>
           <Col className=""></Col>
           <Col className="tw-flex tw-justify-end">
-            {product?.pSaleStatus && (
+            {(product?.pSaleStatus ) && (
               <span className="badge bg-danger  text-white  "> {product?.pOffer}% Off</span>
             )}
           </Col>{' '}
@@ -65,7 +67,7 @@ export default function HerbCard({ product }) {
         </Row>
         <Row className="mt-1">
           <Col className="mt-3">
-            <Button variant="outline-dark">Add +</Button>
+            <Button variant="outline-dark" >Add +</Button>
           </Col>
           <Col className=" ">
             <Row className="">

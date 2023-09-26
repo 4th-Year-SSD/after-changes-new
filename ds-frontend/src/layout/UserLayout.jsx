@@ -22,9 +22,6 @@ const DefaultLayout = () => {
     <>
       <TopNav />
       <div className="container mt-2">
-        <div className="row">
-          <p>Home / {localStorage.getItem('userRole') === 'BUYER' ? 'Buyer' : 'Seller'}</p>
-        </div>
 
         <div className="row">
           <div className="d-flex">

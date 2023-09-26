@@ -13,6 +13,8 @@ import 'react-awesome-slider/dist/captioned.css'
 import './productView.scoped.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons'
+
+import { addItemToCart } from '../../../services/cartService'
 const buttonStyle = {
   borderRadius: '50%',
   backgroundColor: 'white',
@@ -238,6 +240,7 @@ const AddItem = ({ product, weight, setWeight }) => {
           }}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
+          onClick={() => addItemToCart(product?._id) }
         >
           Add to Cart +
         </Button>

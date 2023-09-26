@@ -1,12 +1,13 @@
 import React from 'react'
 import { getCartItems } from '../../services/cartService'
-import { Typography, Box, Avatar } from '@mui/material'
+import { Typography, Box, Avatar, Select, MenuItem } from '@mui/material'
 import TopNav from '../../components/topnav/TopNav'
 import { getMe } from '../../services/userService'
 import { URL } from '../../utils/constants'
 import { hash } from '../../utils/hash'
 import { createOrder } from '../../services/orderService'
 import { getTotalPrice } from '../../services/cartService'
+import { createDelivery } from '../../services/deliveryService'
 
 const customInputStyles = 'tw-rounded-2xl tw-p-5 tw-focus:outline-none tw-h-12 tw-w-80 tw-mt-1'
 
@@ -16,6 +17,7 @@ const Checkout = () => {
   const [user, setUser] = React.useState({})
   const [totalPrice, setTotalPrice] = React.useState(0)
   const [deliveryFee, setDeliveryFee] = React.useState(0)
+  const [deliveryProvince, setDeliveryProvince] = React.useState('Central')
 
   React.useEffect(() => {
     getCartItems()
@@ -25,44 +27,91 @@ const Checkout = () => {
     //   .then((res) => setMerchantInfo(res))
     //   .catch((err) => console.log(err))
     getMe()
-      .then((res) => setUser(res))
+      .then((res) => {
+        console.log('CHECKOUT USER RESPONSE:::', res)
+        setUser(res)
+      })
       .catch((err) => console.log(err))
     getTotalPrice()
       .then((res) => setTotalPrice(res))
       .catch((err) => console.log(err))
   }, [])
-  console.log(cartItems)
+  console.log('cartItems in checkout page', cartItems)
+  console.log('user in checkout page', user)
+
+  const handleProvinceChange = (e) => {
+    setDeliveryProvince(e.target.value)
+    switch (e.target.value) {
+      case 'Central':
+        setDeliveryFee(100)
+        break
+      case 'Eastern':
+        setDeliveryFee(200)
+        break
+      case 'North Central':
+        setDeliveryFee(300)
+        break
+      case 'Northern':
+        setDeliveryFee(400)
+        break
+      case 'North Western':
+        setDeliveryFee(500)
+        break
+      case 'Sabaragamuwa':
+        setDeliveryFee(600)
+        break
+      case 'Southern':
+        setDeliveryFee(700)
+        break
+      case 'Uva':
+        setDeliveryFee(800)
+        break
+      case 'Western':
+        setDeliveryFee(900)
+        break
+      default:
+        setDeliveryFee(0)
+        break
+    }
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-
+    console.log('e in checkout', e)
     const form = new FormData(e.target)
+    console.log('form data in checkout', form)
     const formData = {}
     form.forEach((value, key) => (formData[key] = value))
     const order = {
       products: cartItems?.products?.map((item) => ({
-        product: item.product._id,
+        product: item.product?._id,
         quantity: item.quantity,
       })),
       totalPrice: cartItems.amount,
     }
     const savedOrder = await createOrder(order)
-
-    // formData.order_id = savedOrder._id
-
-    // formData.custom_1 = user._id
-
-    // formData.hash = hash(
-    //   merchantInfo.merchantId,
-    //   formData.order_id,
-    //   formData.amount,
-    //   formData.currency,
-    //   merchantInfo.merchantKey,
-    // )
-    // formData.return_url = undefined
-    // formData.cancel_url = undefined
-    // formData.sandbox = true
-    // console.log(formData)
+    const newDelivery = {
+      orderId: savedOrder._id,
+      userId: user._id,
+      //delivery date = current date + 1 day
+      deliveryDate: new Date(Date.now() + 86400000),
+      deliveryFee: deliveryFee,
+      contactInformation: {
+        firstName: form.first_name,
+        lastName: form.last_name,
+        email: form.email,
+        contactNo: form.phone,
+      },
+      deliveryAddress: {
+        houseNo: form.house_no,
+        street: form.street,
+        city: form.city,
+        province: form.province,
+        postalCode: form.postal_code,
+      },
+    }
+    console.log('newDelivery', newDelivery)
+    createDelivery(newDelivery)
   }
 
   return (
@@ -71,7 +120,7 @@ const Checkout = () => {
       <Box
         sx={{
           mx: '100px',
-          mt: '64px',
+          mt: '30px',
         }}
       >
         <Typography
@@ -101,7 +150,7 @@ const Checkout = () => {
             sx={{
               display: 'flex',
               justifyContent: 'space-between',
-              mt: '32px',
+              mt: '20px',
             }}
           >
             <Box
@@ -118,7 +167,7 @@ const Checkout = () => {
                     mb: '42px',
                   }}
                 >
-                  Personal Information:
+                  Contact Information:
                 </Typography>
                 <Box
                   sx={{
@@ -145,7 +194,7 @@ const Checkout = () => {
                       type="text"
                       name="first_name"
                       id="first_name"
-                      value="Saman"
+                      value={user?.name?.first_name ?? ''}
                       className={customInputStyles}
                     />
                   </Box>
@@ -167,7 +216,7 @@ const Checkout = () => {
                     <input
                       type="text"
                       name="last_name"
-                      value="Perera"
+                      value={user?.name?.last_name ?? ''}
                       className={customInputStyles}
                       placeholder="Last Name"
                     />
@@ -189,7 +238,7 @@ const Checkout = () => {
                     <input
                       type="text"
                       name="email"
-                      value="samanp@gmail.com"
+                      value={user?.email ?? ''}
                       className={customInputStyles}
                       placeholder="Email"
                     />
@@ -206,12 +255,12 @@ const Checkout = () => {
                         color: '#6d6b69',
                       }}
                     >
-                      Phone
+                      Contact Number
                     </Typography>
                     <input
                       type="text"
                       name="phone"
-                      value="0771234567"
+                      value={user?.phone ?? ''}
                       className={customInputStyles}
                       placeholder="Phone"
                     />
@@ -224,7 +273,7 @@ const Checkout = () => {
                     fontSize: '1.5rem',
                     fontWeight: '600',
                     color: '#000',
-                    mt: '76px',
+                    mt: '30px',
                     mb: '32px',
                   }}
                 >
@@ -249,36 +298,14 @@ const Checkout = () => {
                         color: '#6d6b69',
                       }}
                     >
-                      Phone
-                    </Typography>
-                    <input
-                      type="text"
-                      name="city"
-                      value="Colombo"
-                      className={customInputStyles}
-                      placeholder="city"
-                    />
-                  </Box>
-                  <Box
-                    sx={{
-                      display: 'block',
-                    }}
-                  >
-                    <Typography
-                      sx={{
-                        fontSize: '15px',
-                        fontWeight: '500',
-                        color: '#6d6b69',
-                      }}
-                    >
-                      House No
+                      House Number
                     </Typography>
                     <input
                       type="text"
                       name="house_number"
-                      value="No 01"
+                      value=""
                       className={customInputStyles}
-                      placeholder="house no"
+                      placeholder="360"
                     />
                   </Box>
                   <Box
@@ -297,10 +324,32 @@ const Checkout = () => {
                     </Typography>
                     <input
                       type="text"
-                      name="street"
-                      value="Barnes Place"
+                      name="street_name"
+                      value=""
                       className={customInputStyles}
-                      placeholder="street"
+                      placeholder="Robert Lane"
+                    />
+                  </Box>
+                  <Box
+                    sx={{
+                      display: 'block',
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        fontSize: '15px',
+                        fontWeight: '500',
+                        color: '#6d6b69',
+                      }}
+                    >
+                      City
+                    </Typography>
+                    <input
+                      type="text"
+                      name="city"
+                      value=""
+                      className={customInputStyles}
+                      placeholder="Malabe"
                     />
                   </Box>
                   <Box
@@ -320,10 +369,47 @@ const Checkout = () => {
                     <input
                       type="text"
                       name="postal_code"
-                      value="00400"
+                      value=""
                       className={customInputStyles}
-                      placeholder="postal code"
+                      placeholder="10115"
                     />
+                  </Box>
+                  <Box
+                    sx={{
+                      display: 'block',
+                      minWidth: 320,
+                      mb: '20px',
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        fontSize: '15px',
+                        fontWeight: '500',
+                        color: '#6d6b69',
+                      }}
+                    >
+                      Province
+                    </Typography>
+                    <Select
+                      className={customInputStyles}
+                      value={deliveryProvince}
+                      name="province"
+                      label="Province"
+                      onChange={handleProvinceChange}
+                      fullWidth
+                      displayEmpty
+                      inputProps={{ 'aria-label': 'Without label' }}
+                    >
+                      <MenuItem value={'Central'}>Central</MenuItem>
+                      <MenuItem value={'Eastern'}>Eastern</MenuItem>
+                      <MenuItem value={'North Central'}>North Central</MenuItem>
+                      <MenuItem value={'Nothern'}>Nothern</MenuItem>
+                      <MenuItem value={'North Western'}>North Western</MenuItem>
+                      <MenuItem value={'Sabaragamuwa'}>Sabaragamuwa</MenuItem>
+                      <MenuItem value={'Southern	'}>Southern </MenuItem>
+                      <MenuItem value={'Uva'}>Uva</MenuItem>
+                      <MenuItem value={'Western'}>Western</MenuItem>
+                    </Select>
                   </Box>
                 </Box>
               </Box>
@@ -453,7 +539,7 @@ const Checkout = () => {
                         gap: '16px',
                       }}
                     >
-                      <Avatar alt={product.pName} src={product.pImages[0]} />
+                      <Avatar alt={product?.pName} src={product?.pImages[0]} />
                       <Typography
                         sx={{
                           fontSize: '16px',
@@ -461,7 +547,7 @@ const Checkout = () => {
                           color: '#6d6b69',
                         }}
                       >
-                        {product.pName}
+                        {product?.pName}
                       </Typography>
                     </Box>
                     <Typography>X</Typography>

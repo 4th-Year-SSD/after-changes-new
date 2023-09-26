@@ -4,6 +4,7 @@ import { makeResponse } from "../utils/response";
 import asyncHandler from "./async";
 
 export const protect = asyncHandler(async (req, res, next) => {
+  console.log();
   const token = req.headers.authorization
     ? req.headers.authorization.startsWith("Bearer")
       ? req.headers.authorization.split(" ")[1]
@@ -21,35 +22,9 @@ export const protect = asyncHandler(async (req, res, next) => {
   next();
 });
 
-
 export const adminProtect = asyncHandler(async (req, res, next) => {
   if (req.user.role !== "ADMIN")
     return makeResponse({ res, status: 403, message: "Unauthorized" });
-  next();
-});
-
-//To protect registration routes for only admins
-export const regProtect = asyncHandler(async (req, res, next) => {
-  const token = req.headers.authorization
-    ? req.headers.authorization.startsWith("Bearer")
-      ? req.headers.authorization.split(" ")[1]
-      : null
-    : null;
-
-  const decodedUser = decodeJwtToken(token).data;
-
-  const user = decodedUser
-    ? await getOneUser({ _id: decodedUser._id }, false)
-    : null;
-  if (user?.role == "ADMIN") {
-    req.user = user;
-  } else {
-    req.user = null;
-    if (req.body.role) {
-      req.body.role = "BUYER";
-    }
-  }
-
   next();
 });
 

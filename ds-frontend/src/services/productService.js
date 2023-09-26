@@ -2,14 +2,14 @@ import Swal from 'sweetalert2'
 
 import axios from 'axios'
 export const axiosInstance = axios.create({
-  baseURL: `http://localhost:3003/api`,
+  baseURL: `http://localhost:3001/api`,
   headers: {
     'Content-Type': 'application/json',
   },
 })
 
 axiosInstance.interceptors.request.use((config) => {
-  config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`
+  config.headers.Authorization = `Bearer ${localStorage.getItem('access_token')}`
   return config
 })
 
@@ -70,6 +70,7 @@ export const createProduct = async (product) => {
     }
 
     const response = await axiosInstance.post('/product/add-product', requestBody)
+    console.log(response.data)
     return response.data
   } catch (error) {
     console.log(error)
@@ -165,7 +166,7 @@ export const confirmProduct = async (pPid) => {
       text: "You won't be able to revert this!",
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Yes, update it!',
+      confirmButtonText: 'Yes, Confirm it!',
       cancelButtonText: 'No, cancel!',
       reverseButtons: true,
     })

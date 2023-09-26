@@ -1,8 +1,12 @@
 import asyncHandler from "../middleware/async";
 import { makeResponse } from "../utils/response";
-import { loginUser, registerUser } from "../services/auth.services";
+import {
+  loginUser,
+  registerUser,
+  googleUserSignIn,
+} from "../services/auth.services";
 import { sendTokenResponse } from "../utils/jwt";
-
+// login user
 export const login = asyncHandler(async (req, res) => {
   const user = await loginUser(req.body);
   if (!user) {
@@ -11,9 +15,9 @@ export const login = asyncHandler(async (req, res) => {
   if (user.status) {
     return makeResponse({ res, ...user });
   }
-  return sendTokenResponse(res, user, "User logged in successfully");
+  return sendTokenResponse(res, req, user, "User logged in successfully");
 });
-
+// create user
 export const register = asyncHandler(async (req, res) => {
   const result = await registerUser(req.body);
   if (!result)
@@ -25,4 +29,14 @@ export const register = asyncHandler(async (req, res) => {
     data: result,
     message: "User added successfully",
   });
+});
+
+export const googleSignIn = asyncHandler(async (req, res) => {
+  const result = await googleUserSignIn(req.body);
+  if (!result)
+    return makeResponse({ res, status: 500, message: "Failed to add user" });
+  if (result.status) return makeResponse({ res, ...result });
+
+  const user = result;
+  return sendTokenResponse(res, req, user, "User signed in successfully");
 });

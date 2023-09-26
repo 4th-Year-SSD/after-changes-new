@@ -2,7 +2,7 @@ import React, { Fragment, useContext, useState, useEffect, useRef } from 'react'
 import { ProductContext } from '../Products'
 
 import { createProduct, getSellerAllProduct } from '../../../../../services/productService'
-import { getAllCategory } from '../../../../../services/categoryService'
+
 import { Badge } from 'react-bootstrap'
 import { imageUpload, removeImage } from '../../../../../utils/imagesFunctions'
 import { categories } from '../../../../../data/dumyCategories'
@@ -10,6 +10,7 @@ import { editProduct } from '../../../../../services/productService'
 
 const EditProductModal = (props) => {
   const { data, dispatch } = useContext(ProductContext)
+  
   const [selectedFile, setSelectedFile] = useState(null)
   const [error, setError] = useState('')
   const fileInputRef = useRef(null)
@@ -70,8 +71,8 @@ const EditProductModal = (props) => {
 
   const submitForm = async (e) => {
     e.preventDefault()
-    if (editformData.pImages < 2) {
-      console.log('Image Not upload=============', editformData)
+    if (editformData.pImages > 1) {
+      console.log('UploaImage ')
     } else {
       console.log('Image uploading')
     }
@@ -265,7 +266,7 @@ const EditProductModal = (props) => {
             <div className="tw-flex tw-space-x-1 tw-py-4">
               <div className="tw-flex tw-w-1/2  tw-flex-col tw-mt-4">
                 <label htmlFor="image">Product Images *</label>
-                <span className="tw-text-gray-600 tw-text-xs">Must need 2 images</span>
+                <span className="tw-text-gray-600 tw-text-xs">Must need 1 image</span>
                 {imageAdded && (
                   <div className="tw-mt-3">
                     {editformData.pImages.map((image, index) => (
@@ -347,11 +348,11 @@ const EditProductModal = (props) => {
                   className="tw-px-4 tw-py-2 tw-border tw-focus:outline-none"
                   id="status"
                 >
-                  <option name="status" value="Active">
-                    Active
+                  <option name="status" value="Available">
+                    Available
                   </option>
-                  <option name="status" value="Disabled">
-                    Disabled
+                  <option name="status" value="Out of Stock">
+                    Out Of Stock
                   </option>
                 </select>
               </div>

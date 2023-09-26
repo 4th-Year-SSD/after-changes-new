@@ -7,19 +7,19 @@ import socketIOClient from 'socket.io-client'
 import { Menu, Dropdown, message } from 'antd'
 import { useState, useEffect } from 'react'
 
-export const socket = socketIOClient('http://localhost:3002')
+//export const socket = socketIOClient('http://localhost:3002')
 
 export default function TopBar(props) {
   const [feeds, setFeeds] = useState([])
   const [isNewFeed, setIsNewFeed] = useState(false)
   useEffect(() => {
-    socket.emit('initial_data')
-    socket.on('get_data', getData)
-    socket.on('change_data', changeData)
-    return () => {
-      socket.off('get_data')
-      socket.off('change_data')
-    }
+    // socket.emit('initial_data')
+    // socket.on('get_data', getData)
+    // socket.on('change_data', changeData)
+    // return () => {
+    //   socket.off('get_data')
+    //   socket.off('change_data')
+    // }
   }, [])
 
   const getData = (feeds) => {
@@ -31,14 +31,14 @@ export default function TopBar(props) {
     setFeeds(feeds)
   }
 
-  const changeData = () => socket.emit('initial_data')
+  //const changeData = () => socket.emit('initial_data')
 
   const handleClick = ({ key }) => {
     message.info(`Clicked on item ${key}`)
   }
 
   const handleDropdownClick = () => {
-    socket.emit('check_all_notifications')
+  // socket.emit('check_all_notifications')
   }
 
   const menu = (
@@ -97,11 +97,7 @@ export default function TopBar(props) {
                       Profile
                     </a>
                   </li>
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      Setting
-                    </a>
-                  </li>
+
                   <li>
                     <hr className="dropdown-divider" />
                   </li>

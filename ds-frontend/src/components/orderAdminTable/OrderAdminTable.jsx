@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios';
+import axios from 'axios'
 
 export default function OrderAdminTable() {
-  const [orderData, setOrderData] = useState([]);
-  const [orderId, setOrderId] = useState('');
+  const [orderData, setOrderData] = useState([])
+  const [orderId, setOrderId] = useState('')
 
   const config = {
-    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+    headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` },
   }
 
   const updateOrderStatus = (orderId, status) => {
@@ -22,7 +22,7 @@ export default function OrderAdminTable() {
       .catch((err) => {
         console.log(err)
       })
-  };
+  }
 
   useEffect(() => {
     axios

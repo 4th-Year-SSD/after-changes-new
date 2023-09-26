@@ -37,11 +37,11 @@ const UserSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: [true, "Password is rquired"],
+
   },
   phone: {
     type: String,
-    required: [true, "Phone number is required"],
+
     validate: {
       validator: (v) => {
         return /\d{10}/gm.test(v);
@@ -51,11 +51,14 @@ const UserSchema = new mongoose.Schema({
   },
   address: {
     type: String,
-    required: [true, "Address is required"],
+   
   },
   is_active: {
     type: Boolean,
     default: true,
+  },
+  profilePic: {
+    type: String,
   },
 });
 

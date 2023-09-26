@@ -1,11 +1,12 @@
 import User from "../models/user.model";
 import logger from "../utils/logger";
-
+// create user repository
 export const createUser = async (user) => {
   const userMade = (await new User(user).save()).toObject();
   return userMade;
 };
 
+// get all users 
 export const getAllUsers = async ({
   sort = {},
   filter = {},
@@ -19,14 +20,15 @@ export const getAllUsers = async ({
       locale: "en",
     },
   };
-
+   // if sort is not empty
   if (Object.keys(sort).length > 0) options.sort = sort;
-
+// if filter is not empty
   if (filter.member_count) {
+    // filter by member count
     filter.members = { $size: Number(filter.member_count) };
     delete filter.member_count;
   }
-
+  // if filter is not empty
   const aggregateQuery = () =>
     User.aggregate([
       {
@@ -34,7 +36,7 @@ export const getAllUsers = async ({
       },
       { $unset: ["password", "verification_code"] },
     ]);
-
+  // if page is not empty
   return await (page
     ? User.aggregatePaginate(aggregateQuery(), options)
     : aggregateQuery()
@@ -45,6 +47,40 @@ export const getAllUsers = async ({
     throw err;
   });
 };
+//
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 export const getOneUser = async (filters, returnPassword = false) => {
   const user = await User.findOne(filters)

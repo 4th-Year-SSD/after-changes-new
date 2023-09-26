@@ -1,0 +1,11 @@
+npm-debug.log
+Dockerfile
+Dockerfile.*
+node_modules
+build
+.cache
+docker-compose.yml
+.dockerignore
+README.md
+LICENSE
+

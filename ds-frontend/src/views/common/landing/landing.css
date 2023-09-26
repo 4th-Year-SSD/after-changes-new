@@ -1,0 +1,18 @@
+.body-content {
+  margin: 30px;
+  text-align: center;
+  background-color: #b1b0b0;
+}
+
+.welcome {
+  text-align: center;
+}
+.btn-banner {
+  background-color: #4c7c7d !important;
+  color: #ffffff;
+  border-radius: 10px;
+  border: 1px solid #ffffff;
+  padding: 10px;
+  margin-left: 20% !important;
+  margin-bottom: 15% !important;
+}

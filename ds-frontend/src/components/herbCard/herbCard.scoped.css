@@ -1,0 +1,11 @@
+.herb-card {
+  height: 227px;
+  width: 253px;
+  background-color: #ffffff !important;
+  margin: 5px;
+  border-radius: 10px;
+}
+.badge {
+  transform: rotate(20deg);
+  transform-origin: right top;
+}

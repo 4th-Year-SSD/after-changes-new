@@ -1,0 +1,8 @@
+.item-filter {
+  height: 90vh;
+  width: 250px !important;
+  background-color: #f5f3f0;
+  padding: 20px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  margin-top: 2%;
+}

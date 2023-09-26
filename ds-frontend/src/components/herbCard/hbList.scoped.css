@@ -1,0 +1,17 @@
+.slider-btn-container {
+  width: 30px;
+}
+.slider-container {
+  height: 345px;
+
+  overflow: hidden;
+  display: flex;
+}
+.overflow-auto::-webkit-scrollbar {
+  display: none !important;
+}
+
+/* Customize the appearance of the scrollbar thumb */
+.overflow-auto::-webkit-scrollbar-thumb {
+  background-color: #888;
+}

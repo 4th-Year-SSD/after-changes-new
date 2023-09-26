@@ -1,0 +1,12 @@
+.order-card {
+    height: 235px;
+    width: 253px;
+    background-color: #ffffff !important;
+    margin: 30px 5px 5px 10px;
+    border-radius: 10px;
+}
+
+.orderCardProducts{
+    overflow-y: scroll;
+    height: 80px;
+}

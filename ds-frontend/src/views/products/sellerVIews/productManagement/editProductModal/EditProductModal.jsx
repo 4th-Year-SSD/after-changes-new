@@ -10,18 +10,18 @@ import { editProduct } from '../../../../../services/productService'
 
 const EditProductModal = (props) => {
   const { data, dispatch } = useContext(ProductContext)
-  
+
   const [selectedFile, setSelectedFile] = useState(null)
   const [error, setError] = useState('')
   const fileInputRef = useRef(null)
 
   const [imageAdded, setImageAdded] = useState(false)
-
+  const [csrf_token, setCsrfToken] = React.useState('')
   const alert = (msg, type) => <div className={`bg-${type}-200 py-2 px-4 w-full`}>{msg}</div>
 
   const [editformData, setEditformdata] = useState({
     pId: '',
-    pPid:'',
+    pPid: '',
     pName: '',
     pDescription: '',
     pImages: [],
@@ -52,10 +52,6 @@ const EditProductModal = (props) => {
     })
   }, [data.editProductModal])
 
-
-
-
-
   useEffect(() => {
     setImageAdded(true)
   }, [editformData?.pImages])
@@ -77,7 +73,7 @@ const EditProductModal = (props) => {
       console.log('Image uploading')
     }
     try {
-      let responseData = await editProduct(editformData)
+      let responseData = await editProduct(editformData )
       if (responseData.success) {
         fetchData()
         setEditformdata({ ...editformData, success: responseData.success })
@@ -160,7 +156,18 @@ const EditProductModal = (props) => {
         console.log(err)
       })
   }
+  useEffect(() => {
+    async function fetchToken() {
+      const response = await fetch('http://localhost:3001/csrf', {
+        credentials: 'include',
+      })
+      const data = await response.json()
+      setCsrfToken(data.token)
+      //localStorage.setItem('token', data.token)
+    }
 
+    fetchToken()
+  }, [])
   return (
     <>
       {/* Black Overlay */}

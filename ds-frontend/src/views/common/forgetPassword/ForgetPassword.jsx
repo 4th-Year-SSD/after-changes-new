@@ -1,10 +1,9 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import TopNav from '../../../components/topnav/TopNav'
 import { validateEmail, validateFullName, validateMessage } from '../../../utils/validations'
 import { IpAddress, SendEmail } from '../../../services/sendMail'
-import { toast } from "react-toastify";
+import { toast } from 'react-toastify'
 import { Form, Button } from 'react-bootstrap'
-
 
 export default function ForgetPassword() {
   const [fullName, setFullName] = useState('')
@@ -20,6 +19,8 @@ export default function ForgetPassword() {
 
   const [buttonLoading, setButtonLoading] = useState(false)
   const [send, setSend] = useState()
+
+
 
   useEffect(() => {
     if (!ipData) {
@@ -44,11 +45,12 @@ export default function ForgetPassword() {
     e.preventDefault()
     setButtonLoading(true)
     if (!fullNameError & !emailError & !messageError) {
-      SendEmail({ fullName, email, message, setSend }).then(() => {
+      SendEmail({ fullName, email, message, setSend}).then(() => {
         setButtonLoading(false)
       })
     }
   }
+
   return (
     <div>
       <TopNav />
@@ -61,6 +63,7 @@ export default function ForgetPassword() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
+      
           </Form.Group>
 
           <Form.Group className="text-center">

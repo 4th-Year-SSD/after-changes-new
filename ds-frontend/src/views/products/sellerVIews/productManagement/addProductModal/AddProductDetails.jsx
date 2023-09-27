@@ -16,8 +16,8 @@ const AddProductDetail = () => {
   const [error, setError] = useState('')
   const fileInputRef = useRef(null)
 
-
   const [imageAdded, setImageAdded] = useState(false)
+  const [csrf_token, setCsrfToken] = React.useState('')
 
   const [fData, setFdata] = useState({
     pName: '',
@@ -46,7 +46,6 @@ const AddProductDetail = () => {
   }
 
   useEffect(() => {
-
     setImageAdded(true)
     setSelectedFile(null)
   }, [fData?.pImages])
@@ -62,8 +61,7 @@ const AddProductDetail = () => {
     }
 
     try {
-
-      let responseData = await createProduct(fData)
+      let responseData = await createProduct(fData ,csrf_token)
       console.log(responseData)
       if (responseData.success) {
         fetchData()
@@ -169,6 +167,19 @@ const AddProductDetail = () => {
       })
   }
 
+  useEffect(() => {
+    async function fetchToken() {
+      const response = await fetch('http://localhost:3001/csrf', {
+        credentials: 'include',
+      })
+      const data = await response.json()
+      setCsrfToken(data.token)
+      //localStorage.setItem('token', data.token)
+    }
+
+    fetchToken()
+  }, [])
+
   return (
     <>
       {/* Black Overlay */}
@@ -232,6 +243,8 @@ const AddProductDetail = () => {
                   className="tw-px-4 tw-py-2 tw-border tw-focus:outline-none"
                   type="text"
                 />
+
+                <input type="hidden" name="_csrf" value={csrf_token}></input>
               </div>
               <div className="tw-w-1/2 tw-flex tw-flex-col tw-space-y-1 tw-space-x-1">
                 <label htmlFor="price">Product Price *</label>

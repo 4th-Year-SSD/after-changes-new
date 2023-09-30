@@ -10,18 +10,18 @@ import { editProduct } from '../../../../../services/productService'
 
 const EditProductModal = (props) => {
   const { data, dispatch } = useContext(ProductContext)
-  
+
   const [selectedFile, setSelectedFile] = useState(null)
   const [error, setError] = useState('')
   const fileInputRef = useRef(null)
 
   const [imageAdded, setImageAdded] = useState(false)
-
+  const [csrf_token, setCsrfToken] = React.useState('')
   const alert = (msg, type) => <div className={`bg-${type}-200 py-2 px-4 w-full`}>{msg}</div>
 
   const [editformData, setEditformdata] = useState({
     pId: '',
-    pPid:'',
+    pPid: '',
     pName: '',
     pDescription: '',
     pImages: [],
@@ -52,10 +52,6 @@ const EditProductModal = (props) => {
     })
   }, [data.editProductModal])
 
-
-
-
-
   useEffect(() => {
     setImageAdded(true)
   }, [editformData?.pImages])
@@ -72,12 +68,12 @@ const EditProductModal = (props) => {
   const submitForm = async (e) => {
     e.preventDefault()
     if (editformData.pImages > 1) {
-      console.log('UploaImage ')
+  //
     } else {
-      console.log('Image uploading')
+ //
     }
     try {
-      let responseData = await editProduct(editformData)
+      let responseData = await editProduct(editformData )
       if (responseData.success) {
         fetchData()
         setEditformdata({ ...editformData, success: responseData.success })
@@ -97,7 +93,7 @@ const EditProductModal = (props) => {
         }, 2000)
       }
     } catch (error) {
-      console.log(error)
+//
     }
   }
   const handleFileSelect = (event) => {
@@ -132,11 +128,11 @@ const EditProductModal = (props) => {
           success: false,
           pImages: [...prevState.pImages, imageUrl],
         }))
-        console.log(imageUrl)
+
         setSelectedFile(null)
       })
       .catch((error) => {
-        console.log(error)
+
       })
   }
 
@@ -153,14 +149,25 @@ const EditProductModal = (props) => {
           pImages: prevState.pImages.filter((url) => url !== imageUrl),
         })),
 
-        console.log('Image removed from Firebase Storage'),
+      
         setSelectedFile(null),
       )
       .catch((err) => {
-        console.log(err)
+    
       })
   }
+  useEffect(() => {
+    async function fetchToken() {
+      const response = await fetch(`${process.env.REACT_APP_DOMAIN}csrf`, {
+        credentials: 'include',
+      })
+      const data = await response.json()
+      setCsrfToken(data.token)
+      //localStorage.setItem('token', data.token)
+    }
 
+    fetchToken()
+  }, [])
   return (
     <>
       {/* Black Overlay */}

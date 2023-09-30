@@ -30,7 +30,6 @@ userRouter.get(
   protect,
   doubleCsrfProtection,
   csrfErrorHandler,
-
   getById
 );
 // userRouter.delete('/:id', protect, deleteUser)

@@ -13,14 +13,11 @@ export default function OrderView() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/api/order/`, config)
+      .get(`${process.env.REACT_APP_BACKEND_URL}/order/`, config)
       .then((response) => {
-        console.log(response.data)
         setOrders(response.data)
       })
-      .catch((error) => {
-        console.log(error)
-      })
+      .catch((error) => {})
   }, [orders])
 
   return (

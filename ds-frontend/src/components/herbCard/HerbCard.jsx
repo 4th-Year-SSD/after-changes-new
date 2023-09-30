@@ -9,7 +9,7 @@ import { addItemToCart } from '../../services/cartService'
 export default function HerbCard({ product }) {
   const navigate = useNavigate()
   useEffect(() => {
-    console.log(product)
+
   }, [])
   return (
     <>

@@ -16,18 +16,18 @@ export default function DeleteReviewCard({ reviewDetails, isOpen, onClose }) {
     if (reviewType === 'product') {
       deleteProductReview(reviewDetails._id)
         .then((res) => {
-          console.log('Review deleted: ', res)
+
         })
         .catch((error) => {
-          console.log(error)
+
         })
     } else {
       deleteSellerReview(reviewDetails._id)
         .then((res) => {
-          console.log('Review deleted: ', res)
+
         })
         .catch((error) => {
-          console.log(error)
+  
         })
     }
     onClose()

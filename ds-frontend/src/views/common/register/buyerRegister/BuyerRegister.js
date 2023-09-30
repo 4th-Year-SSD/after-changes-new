@@ -45,9 +45,10 @@ const BuyerRegister = () => {
       // Check if passwords match
       setPasswordError("Passwords don't match");
     } else {
-      console.log(form)
+
        // Reset password error
        setPasswordError('');
+
       //if the form is valid send the user entered data
       axiosInstance
         .post('/auth/register', { user:form })
@@ -66,7 +67,7 @@ const BuyerRegister = () => {
         })
         .catch(function (error) {
           // handle error
-          console.log(error)
+    
         })
         .then(function () {
           // always executed

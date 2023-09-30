@@ -26,7 +26,7 @@ const AllProduct = (props) => {
           type: 'fetchProductsAndChangeState',
           payload: responseData.data,
         })
-        console.log(responseData.data)
+    
         setLoading(false)
       }
     }, 1000)
@@ -34,7 +34,7 @@ const AllProduct = (props) => {
 
   const confirmProductReq = async (pId, sellerId) => {
     let confirmProductResponse = await confirmProduct(pId)
-    console.log(confirmProductResponse)
+
     if (confirmProductResponse?.error) {
       Swal.fire({
         icon: 'error',
@@ -43,15 +43,15 @@ const AllProduct = (props) => {
         timer: 2000,
       })
     } else if (confirmProductResponse?.success) {
-      console.log(sellerId)
+
 
       const data = { userID: sellerId, message: `Product ${pId} is accepted by admin` }
-      console.log(JSON.stringify(data))
+
 
       // socket.emit('post_data', JSON.stringify(data))
       message.success('Feed created successfully')
 
-      console.log(confirmProductResponse.success)
+   
       fetchData()
     }
   }

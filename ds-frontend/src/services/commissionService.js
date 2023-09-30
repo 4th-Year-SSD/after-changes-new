@@ -2,7 +2,7 @@
 // const baseURL = 'http://localhost:3010/api/commission/'
 import axios from 'axios'
 export const axiosInstance = axios.create({
-  baseURL: `http://localhost:3010/api`,
+  baseURL: `${process.env.REACT_APP_BACKEND_URL}`,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -13,9 +13,12 @@ axiosInstance.interceptors.request.use((config) => {
   return config
 })
 
-export const addCommission = async (commission) => {
-  const result = await axiosInstance.post(`/commission/`, { commission_percentage: commission })
-  console.log('result: ', result)
+export const addCommission = async (commission, csrf_token) => {
+  const result = await axiosInstance.post(`/commission/`, {
+    commission_percentage: commission,
+    csrf_token: csrf_token,
+  })
+
   return result
 }
 
@@ -23,6 +26,11 @@ export const getCommission = async () => {
   return (await axiosInstance.get(`/commission/`)).data.data
 }
 
-export const updateCommission = async (user_id, commission) => {
-  return (await axiosInstance.patch(`/commission/${user_id}`, commission)).data
+export const updateCommission = async (user_id, commission, csrf_token) => {
+  return (
+    await axiosInstance.patch(`/commission/${user_id}`, {
+      commission: commission,
+      csrf_token: csrf_token,
+    })
+  ).data
 }

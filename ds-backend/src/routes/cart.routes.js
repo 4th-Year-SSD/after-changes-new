@@ -9,15 +9,25 @@ const {
   getTotalPrice,
   getCartCount,
 } = require("../controllers/cart.controller");
+import { doubleCsrfProtection,csrfErrorHandler } from "../utils/csrf.js";
+
 const cartRouter = express.Router();
 
 cartRouter.route("/").post(protect, createCart);
 cartRouter
   .route("/:userId")
   .get(protect, getCartByUserId)
-  .put(protect, updateCart)
-  .delete(protect, deleteCart);
-cartRouter.route('/:userId/:productId').delete(protect, deleteProductFromCart);
+  .put(protect, doubleCsrfProtection, csrfErrorHandler, updateCart)
+  .delete(protect, doubleCsrfProtection, csrfErrorHandler, deleteCart);
+cartRouter
+  .route("/:userId/:productId")
+  .delete(
+    protect,
+     doubleCsrfProtection,
+    csrfErrorHandler,
+    deleteProductFromCart,
+   
+  );
 // cartRouter.route('/:userId/:productId/').put(protect, updateProductQuantity);
 cartRouter.route('/getTotalPrice/:userId').get(protect,buyerProtect, getTotalPrice);
 cartRouter

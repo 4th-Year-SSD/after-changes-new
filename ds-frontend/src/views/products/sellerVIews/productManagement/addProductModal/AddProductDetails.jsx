@@ -16,8 +16,8 @@ const AddProductDetail = () => {
   const [error, setError] = useState('')
   const fileInputRef = useRef(null)
 
-
   const [imageAdded, setImageAdded] = useState(false)
+  const [csrf_token, setCsrfToken] = React.useState('')
 
   const [fData, setFdata] = useState({
     pName: '',
@@ -46,7 +46,6 @@ const AddProductDetail = () => {
   }
 
   useEffect(() => {
-
     setImageAdded(true)
     setSelectedFile(null)
   }, [fData?.pImages])
@@ -62,9 +61,8 @@ const AddProductDetail = () => {
     }
 
     try {
+      let responseData = await createProduct(fData ,csrf_token)
 
-      let responseData = await createProduct(fData)
-      console.log(responseData)
       if (responseData.success) {
         fetchData()
         setFdata({
@@ -104,7 +102,7 @@ const AddProductDetail = () => {
         }, 2000)
       }
     } catch (error) {
-      console.log(error)
+  //
     }
   }
 
@@ -140,11 +138,11 @@ const AddProductDetail = () => {
           success: false,
           pImages: [...prevState.pImages, imageUrl],
         }))
-        console.log(imageUrl)
+
         setSelectedFile(null)
       })
       .catch((error) => {
-        console.log(error)
+  //
       })
   }
 
@@ -161,13 +159,26 @@ const AddProductDetail = () => {
           pImages: prevState.pImages.filter((url) => url !== imageUrl),
         })),
 
-        console.log('Image removed from Firebase Storage'),
+      
         setSelectedFile(null),
       )
       .catch((err) => {
-        console.log(err)
+ //
       })
   }
+
+  useEffect(() => {
+    async function fetchToken() {
+      const response = await fetch(`${process.env.REACT_APP_DOMAIN}csrf`, {
+        credentials: 'include',
+      })
+      const data = await response.json()
+      setCsrfToken(data.token)
+    
+    }
+
+    fetchToken()
+  }, [])
 
   return (
     <>
@@ -232,6 +243,8 @@ const AddProductDetail = () => {
                   className="tw-px-4 tw-py-2 tw-border tw-focus:outline-none"
                   type="text"
                 />
+
+                <input type="hidden" name="_csrf" value={csrf_token}></input>
               </div>
               <div className="tw-w-1/2 tw-flex tw-flex-col tw-space-y-1 tw-space-x-1">
                 <label htmlFor="price">Product Price *</label>

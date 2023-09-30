@@ -1,8 +1,15 @@
 import Swal from 'sweetalert2'
 
 import axios from 'axios'
+const swalWithBootstrapButtons = Swal.mixin({
+  customClass: {
+    confirmButton: 'btn btn-success',
+    cancelButton: 'btn btn-danger',
+  },
+  buttonsStyling: false,
+})
 export const axiosInstance = axios.create({
-  baseURL: `http://localhost:3001/api`,
+  baseURL: `${process.env.REACT_APP_BACKEND_URL}`,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -13,20 +20,14 @@ axiosInstance.interceptors.request.use((config) => {
   return config
 })
 
-const swalWithBootstrapButtons = Swal.mixin({
-  customClass: {
-    confirmButton: 'btn btn-success',
-    cancelButton: 'btn btn-danger',
-  },
-  buttonsStyling: false,
-})
+
 //type,sellerId
 export const getSellerAllProduct = async () => {
   try {
     let res = await axiosInstance.get(`/product/seller/all-product`)
     return res.data
   } catch (error) {
-    console.log(error)
+   // console.log(error)
   }
 }
 export const getAllProduct = async () => {
@@ -35,7 +36,7 @@ export const getAllProduct = async () => {
 
     return res.data
   } catch (error) {
-    console.log(error)
+  //  console.log(error)
   }
 }
 
@@ -44,10 +45,10 @@ export const getAllProductOnSale = async () => {
     let res = await axiosInstance.get(`/product/all-product-onsale`)
     return res.data
   } catch (error) {
-    console.log(error)
+  // console.log(error)
   }
 }
-export const createProduct = async (product) => {
+export const createProduct = async (product, csrf_token) => {
   try {
     const { pName, pDescription, pImages, pStatus, pCategory, pQuantity, pPrice, pOffer, pWeight } =
       product
@@ -67,17 +68,18 @@ export const createProduct = async (product) => {
       pPrice: parsedPrice,
       pOffer: parsedOffer,
       pWeight: parsedWeight,
+      csrf_token: csrf_token,
     }
 
     const response = await axiosInstance.post('/product/add-product', requestBody)
-    console.log(response.data)
+
     return response.data
   } catch (error) {
-    console.log(error)
+    //console.log(error)
   }
 }
 
-export const editProduct = async (product) => {
+export const editProduct = async (product, csrf_token) => {
   try {
     const {
       pId,
@@ -110,11 +112,12 @@ export const editProduct = async (product) => {
       pPrice: parsedPrice,
       pOffer: parsedOffer,
       pWeight: parsedWeight,
+      csrf_token:csrf_token
     }
     let res = await axiosInstance.post(`/product/seller/edit-product`, requestBody)
     return res.data
   } catch (error) {
-    console.log(error)
+    //console.log(error)
   }
 }
 
@@ -123,7 +126,7 @@ export const deleteProduct = async (pId) => {
     let res = await axiosInstance.delete(`/product/delete-product/${pId}`)
     return res.data
   } catch (error) {
-    console.log(error)
+   // console.log(error)
   }
 }
 export const getProductById = async (pId) => {
@@ -132,7 +135,7 @@ export const getProductById = async (pId) => {
 
     return res.data
   } catch (error) {
-    console.log(error)
+    //console.log(error)
   }
 }
 export const productByCategory = async (catId) => {
@@ -142,7 +145,7 @@ export const productByCategory = async (catId) => {
     })
     return res.data
   } catch (error) {
-    console.log(error)
+    //console.log(error)
   }
 }
 
@@ -153,11 +156,11 @@ export const productByPrice = async (price) => {
     })
     return res.data
   } catch (error) {
-    console.log(error)
+    //(error)
   }
 }
 //admin confirm the product
-export const confirmProduct = async (pPid) => {
+export const confirmProduct = async (pPid ,csrf_token) => {
   /* Most important part for updating multiple image  */
 
   try {
@@ -174,6 +177,7 @@ export const confirmProduct = async (pPid) => {
     if (result.isConfirmed) {
       let res = await axiosInstance.patch(`/product/admin/confirm-product`, {
         pPid,
+        csrf_token,
       })
       return res.data
     } else if (
@@ -187,6 +191,6 @@ export const confirmProduct = async (pPid) => {
       )
     }
   } catch (error) {
-    console.log(error)
+    //console.log(error)
   }
 }

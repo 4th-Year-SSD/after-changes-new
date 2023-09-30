@@ -8,14 +8,26 @@ import {
   updateDeliveryController,
   // deleteDeliveryController,
 } from "../controllers/delivery.controller";
+import { doubleCsrfProtection, csrfErrorHandler } from "../utils/csrf";
 
-const useRouter = express.Router();
 
-useRouter.get("/", getAllDeliveryController);
-useRouter.get("/read-delivery", getDeliveryByIdController);
-useRouter.get("/:delivery_id", getDeliveryByDeliveryIdController);
+const deliveryRouter = express.Router();
 
-useRouter.post("/create", createDeliveryController);
-useRouter.put("/update", updateDeliveryController);
+deliveryRouter.get("/", getAllDeliveryController);
+deliveryRouter.get("/read-delivery", getDeliveryByIdController);
+deliveryRouter.get("/:delivery_id", getDeliveryByDeliveryIdController);
 
-export default useRouter;
+deliveryRouter.post(
+  "/create",
+  doubleCsrfProtection,
+  csrfErrorHandler,
+  createDeliveryController
+);
+deliveryRouter.put(
+  "/update",
+  doubleCsrfProtection,
+  csrfErrorHandler,
+  updateDeliveryController
+);
+
+export default deliveryRouter;

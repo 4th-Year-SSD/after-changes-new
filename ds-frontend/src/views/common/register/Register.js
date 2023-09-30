@@ -53,7 +53,7 @@ const Register = () => {
         })
         .catch(function (error) {
           // handle error
-          console.log(error)
+    
         })
         .then(function () {
           // always executed
@@ -62,9 +62,6 @@ const Register = () => {
       setValidated(false)
     }
   }
-  useState(() => {
-    console.log(isSeller)
-  })
 
   //handleInput
   const handleInput = (e) => {

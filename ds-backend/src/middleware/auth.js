@@ -4,7 +4,7 @@ import { makeResponse } from "../utils/response";
 import asyncHandler from "./async";
 
 export const protect = asyncHandler(async (req, res, next) => {
-  console.log();
+
   const token = req.headers.authorization
     ? req.headers.authorization.startsWith("Bearer")
       ? req.headers.authorization.split(" ")[1]

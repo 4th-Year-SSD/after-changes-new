@@ -174,7 +174,7 @@ const AddProductDetail = () => {
       })
       const data = await response.json()
       setCsrfToken(data.token)
-      //localStorage.setItem('token', data.token)
+    
     }
 
     fetchToken()

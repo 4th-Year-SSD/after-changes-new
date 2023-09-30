@@ -2,7 +2,7 @@ import Swal from 'sweetalert2'
 
 import axios from 'axios'
 export const axiosInstance = axios.create({
-  baseURL: `http://localhost:3001cd /api`,
+  baseURL: `http://localhost:3001/api`,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -67,7 +67,7 @@ export const createProduct = async (product, csrf_token) => {
       pPrice: parsedPrice,
       pOffer: parsedOffer,
       pWeight: parsedWeight,
-      _csrf: csrf_token,
+      // _csrf: csrf_token,
     }
 
     const response = await axiosInstance.post('/product/add-product', requestBody)

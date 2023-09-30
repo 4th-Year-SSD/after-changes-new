@@ -26,7 +26,6 @@ export const csrfErrorHandler = (error, req, res, next) => {
       error: "csrf validation error",
     });
   } else {
-    console.log("inside next");
     next();
   }
 };

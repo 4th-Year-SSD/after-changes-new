@@ -58,20 +58,20 @@ export default function AddReviewCard(reviewCategory) {
       const { seller, ...productReview } = review
       createProductReview(productReview)
         .then((res) => {
-          console.log('Product review added: ', res)
+    
         })
         .catch((err) => {
-          console.log('Error in creating product reveiw: ', err)
+   
         })
     } else {
       const { product, ...sellerReview } = review
 
       createSellerReview(sellerReview)
         .then((res) => {
-          console.log('Seller review added: ', res)
+        
         })
         .catch((err) => {
-          console.log('Error in adding seller review: ', err)
+          
         })
     }
     setRating(0)

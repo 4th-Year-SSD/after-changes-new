@@ -76,7 +76,7 @@ const AddCategoryModal = (props) => {
         }, 2000)
       }
     } catch (error) {
-      console.log(error)
+    //  console.log(error)
     }
   }
 

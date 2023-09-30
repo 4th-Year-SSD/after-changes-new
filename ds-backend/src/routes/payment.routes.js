@@ -1,8 +1,15 @@
 import { Router } from "express";
 import { makePayment, updatePayment } from "../controllers/payment.controller";
-const router = Router();
+const paymentRouter = Router();
+import { doubleCsrfProtection, csrfErrorHandler } from "../utils/csrf";
 
-router.post("/", makePayment);
-router.patch("/:_id", updatePayment);
+paymentRouter.post("/", doubleCsrfProtection, csrfErrorHandler,makePayment);
+paymentRouter.patch(
+  "/:_id",
+    doubleCsrfProtection,
+  csrfErrorHandler,
+  updatePayment,
 
-export default router;
+);
+
+export default paymentRouter;

@@ -27,7 +27,7 @@ export default function ItemView() {
     setTimeout(() => {
       if (responseData?.data) {
         setProducts(responseData.data)
-        console.log(responseData.data)
+
       }
     }, 1000)
   }

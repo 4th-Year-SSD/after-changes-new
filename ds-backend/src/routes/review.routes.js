@@ -11,20 +11,53 @@ import {
   getReviewByIdController,
   getReviewsController,
 } from "../controllers/review.controller";
+import { doubleCsrfProtection , csrfErrorHandler } from "../utils/csrf";
+const reviewRouter  = express.Router();
 
-const userRouter = express.Router();
+reviewRouter.get("/", getAllReviewsController);
+reviewRouter.get("/read-reviews/", getReviewsController);
+reviewRouter.get("/:review_id", getReviewByIdController);
 
-userRouter.get("/", getAllReviewsController);
-userRouter.get("/read-reviews/", getReviewsController);
-userRouter.get("/:review_id", getReviewByIdController);
+reviewRouter.post(
+  "/products/create",
+  doubleCsrfProtection,
+  csrfErrorHandler,
+  createProductReviewController,
+ 
+);
+reviewRouter.post(
+  "/sellers/create",
+    doubleCsrfProtection,
+  csrfErrorHandler,
+  createSellerReviewController,
+ 
+);
 
-userRouter.post("/products/create", createProductReviewController);
-userRouter.post("/sellers/create", createSellerReviewController);
+reviewRouter.delete(
+  "/products/delete/:review_id",
+    doubleCsrfProtection,
+  csrfErrorHandler,
+  deleteProductReviewController,
 
-userRouter.delete("/products/delete/:review_id", deleteProductReviewController);
-userRouter.delete("/sellers/delete/:review_id", deleteSellerReviewController);
+);
+reviewRouter.delete(
+  "/sellers/delete/:review_id",
+    doubleCsrfProtection,
+  csrfErrorHandler,
+  deleteSellerReviewController,
+);
 
-userRouter.put("/products/update/:user_id", updateProductReviewController);
-userRouter.put("/sellers/update/:user_id", updateSellerReviewController);
+reviewRouter.put(
+  "/products/update/:user_id",
+    doubleCsrfProtection,
+  csrfErrorHandler,
+  updateProductReviewController,
+);
+reviewRouter.put(
+  "/sellers/update/:user_id",
+    doubleCsrfProtection,
+  csrfErrorHandler,
+  updateSellerReviewController,
+);
 
-export default userRouter;
+export default reviewRouter ;

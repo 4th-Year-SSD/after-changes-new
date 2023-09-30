@@ -4,10 +4,21 @@ import {
   addCommission,
   updateCommission,
 } from "../controllers/commission.controller";
-const router = Router();
+import { doubleCsrfProtection ,csrfErrorHandler } from "../utils/csrf";
+const commissionRouter = Router();
 
-router.get("/", getCommission);
-router.post("/", addCommission);
-router.patch("/:_id", updateCommission);
+commissionRouter .get("/", getCommission);
+commissionRouter.post(
+  "/",
+  doubleCsrfProtection,
+  csrfErrorHandler,
+  addCommission
+);
+commissionRouter.patch(
+  "/:_id",
+  doubleCsrfProtection,
+  csrfErrorHandler,
+  updateCommission
+);
 
-export default router;
+export default commissionRouter ;

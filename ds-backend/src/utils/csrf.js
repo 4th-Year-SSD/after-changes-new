@@ -14,9 +14,18 @@ export const { invalidCsrfTokenError, generateToken, doubleCsrfProtection } =
       return "123456789";
     },
     cookieName: "x-csrf-token",
-    getTokenFromRequest: (req) => {
-      return req.headers["x-csrf-token"];
-    },
+ getTokenFromRequest: (req) => {
+  // Get the CSRF token from the header.
+  const csrfToken = req.headers["x-csrf-token"];
+
+  // If the CSRF token is not in the header, check the body.
+  if (csrfToken === undefined) {
+    csrfToken = req.body.csrf_token;
+  }
+
+  // Return the CSRF token.
+  return csrfToken;
+}
   });
 
 // Error handling, validation error interception
@@ -26,7 +35,6 @@ export const csrfErrorHandler = (error, req, res, next) => {
       error: "csrf validation error",
     });
   } else {
-    console.log("inside next");
     next();
   }
 };

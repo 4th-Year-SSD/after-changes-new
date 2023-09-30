@@ -1,6 +1,6 @@
 import axios from 'axios'
 export const axiosInstance = axios.create({
-  baseURL: `http://localhost:3001/api`,
+  baseURL: `${process.env.REACT_APP_BACKEND_URL}`,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -43,8 +43,9 @@ export const getReviews = async (review) => {
   }
 }
 
-export const createProductReview = async (productReview) => {
-  console.log('product review in service: ', productReview)
+export const createProductReview = async (productReview, csrf_token) => {
+
+  productReview.csrf_token = csrf_token
   try {
     const response = await axiosInstance.post(`/reviews/products/create`, productReview)
     return response.data
@@ -54,8 +55,9 @@ export const createProductReview = async (productReview) => {
   }
 }
 
-export const createSellerReview = async (sellerReview) => {
-  console.log('seller review in service: ', sellerReview)
+export const createSellerReview = async (sellerReview, csrf_token) => {
+
+  sellerReview.csrf_token = csrf_token
   try {
     const response = await axiosInstance.post(`/reviews/sellers/create`, sellerReview)
     return response.data
@@ -85,8 +87,10 @@ export const deleteSellerReview = async (reviewId) => {
   }
 }
 
-export const updateProductReview = async (userId, productReview) => {
-  console.log('This is the updated product review in the service: ', productReview)
+export const updateProductReview = async (userId, productReview, csrf_token) => {
+
+  productReview.csrf_token = csrf_token
+
   try {
     const response = await axiosInstance.put(`/reviews/products/update/${userId}`, productReview)
     return response.data
@@ -96,8 +100,9 @@ export const updateProductReview = async (userId, productReview) => {
   }
 }
 
-export const updateSellerReview = async (userId, sellerReview) => {
-  console.log('This is the updated seller review in the service: ', sellerReview)
+export const updateSellerReview = async (userId, sellerReview, csrf_token) => {
+
+  sellerReview.csrf_token = csrf_token
   try {
     const response = await axiosInstance.put(`/reviews/sellers/update/${userId}`, sellerReview)
     return response.data

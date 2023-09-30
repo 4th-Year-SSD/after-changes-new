@@ -59,7 +59,7 @@ export default function Login() {
           showConfirmButton: false,
           timer: 2000,
         })
-        console.log(error)
+     
       })
       .then(function () {
         // always executed
@@ -81,11 +81,10 @@ export default function Login() {
       .post('/auth/google-sginin', user)
       .then((res) => {
         if (res.status === 201 || res.status === 200) {
-          console.log(res)
+      
 
           localStorage.setItem('role', res.data.data?.user?.role)
           localStorage.setItem('access_token', res.data.data?.access_token)
-          //  localStorage.setItem('token', res.data.data?.token)
           localStorage.setItem('name', res.data.data?.user?.name.first_name)
           localStorage.setItem('email', res.data.data?.user?.email)
           localStorage.setItem('authenticated', true)
@@ -107,7 +106,9 @@ export default function Login() {
           ) {
             navigate('../user/dashboard')
           }
-        } else console.log(res.status)
+        } else {
+          //
+        }
       })
       .catch((error) => {
         // handle error
@@ -117,13 +118,12 @@ export default function Login() {
           showConfirmButton: false,
           timer: 2000,
         })
-        console.log(error)
+      
       })
       .then(() => {
         // always executed
       })
   }
-
 
   return (
     <>
@@ -192,7 +192,7 @@ export default function Login() {
                     createOrSignInGoogleUser(response)
                   }}
                   onError={(response) => {
-                    console.log('erros')
+               
                   }}
                   width="5000"
                 />

@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { useEffect } from 'react'
 import FormControl, { useFormControl } from '@mui/material/FormControl'
 import OutlinedInput from '@mui/material/OutlinedInput'
 import Box from '@mui/material/Box'
@@ -9,13 +10,14 @@ import { Form } from 'react-bootstrap'
 
 export default function UseFormControl() {
   const [commission, setCommission] = React.useState('')
+  const [csrf_token, setCsrfToken] = React.useState('')
   React.useEffect(() => {
     getCommission()
       .then((res) => {
         setCommission(res.data.commission_percentage)
       })
       .catch((err) => {
-        console.log(err)
+        
       })
   }, [])
 
@@ -25,16 +27,26 @@ export default function UseFormControl() {
 
   const handleCommissionSubmit = (event) => {
     event.preventDefault()
-    addCommission(commission)
+    addCommission(commission ,csrf_token)
       .then((res) => {
-        console.log('commission in handle submit', commission)
         setCommission(res.data.commission)
       })
       .catch((err) => {
-        console.log(err)
+    
       })
   }
+  useEffect(() => {
+    async function fetchToken() {
+      const response = await fetch(`${process.env.REACT_APP_DOMAIN}csrf`, {
+        credentials: 'include',
+      })
+      const data = await response.json()
+      setCsrfToken(data.token)
+     //localStorage.setItem('token', data.token)
+    }
 
+    fetchToken()
+  }, [])
   return (
     <>
       <Box component="form" noValidate autoComplete="off">
@@ -51,6 +63,9 @@ export default function UseFormControl() {
           </Typography>
           <FormControl sx={{ width: '25ch' }}>
             <OutlinedInput placeholder="10" value={commission} onChange={handleCommissionChange} />
+          </FormControl>
+          <FormControl>
+            <OutlinedInput type="hidden" name="_csrf" value={csrf_token}></OutlinedInput>
           </FormControl>
           <Button
             type="submit"

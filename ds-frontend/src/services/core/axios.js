@@ -10,7 +10,7 @@ export const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use((config) => {
   config.headers.Authorization = `Bearer ${localStorage.getItem('access_token')}`
-  config.headers['x-csrf-token'] = `${localStorage.getItem('token')}`
+ // config.headers['x-csrf-token'] = `${localStorage.getItem('token')}`
   config.headers['Content-Type'] = `application/json`
   return config
 })

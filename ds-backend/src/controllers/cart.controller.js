@@ -23,7 +23,7 @@ const createCart = asyncHandler(async (req, res) => {
       res.status(201).json(savedCart);
     }
   } catch (err) {
-    console.log(err);
+
     res.status(500).json(err);
   }
 });
@@ -51,8 +51,7 @@ const updateCart = asyncHandler(async (req, res) => {
     const cart = await Cart.findOne({ userId: req.params.userId });
     if (cart) {
       const { product, quantity } = req.body;
-      console.log(product);
-      console.log(quantity);
+
       const index = cart.products.findIndex((item) => item.product == product);
       if (index >= 0) {
         cart.products[index].quantity = quantity;
@@ -116,7 +115,7 @@ const getTotalPrice = asyncHandler(async (req, res) => {
           totalPrice += item.product.pPrice * item.quantity;
         }
       });
-      console.log(totalPrice);
+
       res.status(200).json({ totalPrice });
     } else {
       res.status(404).json({ message: "Cart not found" });

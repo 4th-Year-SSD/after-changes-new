@@ -19,36 +19,38 @@ export default function ShoppingCart() {
 
   //get total price of cart
   axios
-    .get(`http://localhost:3001/api/cart/getTotalPrice/${localStorage.getItem('user_id')}`, config)
+    .get(
+      `${process.env.REACT_APP_BACKEND_URL}/cart/getTotalPrice/${localStorage.getItem('user_id')}`,
+      config,
+    )
     .then((response) => {
       // console.log(response.data);
       setTotalPrice(response.data.totalPrice)
     })
-    .catch((error) => {
-      console.log(error)
-    })
+    .catch((error) => {})
 
   //get no of items in the cart
   axios
-    .get(`http://localhost:3001/api/cart/getCartCount/${localStorage.getItem('user_id')}`, config)
+    .get(
+      `${process.env.REACT_APP_BACKEND_URL}/cart/getCartCount/${localStorage.getItem('user_id')}`,
+      config,
+    )
     .then((response) => {
       setNoOfItems(response.data.count)
     })
-    .catch((error) => {
-      console.log(error)
-    })
+    .catch((error) => {})
 
   //remove all items from cart
   const handleRemove = () => {
     axios
-      .delete(`http://localhost:3001/api/cart/${localStorage.getItem('user_id')}`, config)
+      .delete(
+        `${process.env.REACT_APP_BACKEND_URL}/cart/${localStorage.getItem('user_id')}`,
+        config,
+      )
       .then((response) => {
-        console.log('Deleted')
         setCart([])
       })
-      .catch((error) => {
-        console.log(error)
-      })
+      .catch((error) => {})
   }
 
   //remove one product from cart
@@ -56,30 +58,23 @@ export default function ShoppingCart() {
     e.preventDefault()
     axios
       .delete(
-        `http://localhost:3001/api/cart/${localStorage.getItem('user_id')}/` + productId,
+        `${process.env.REACT_APP_BACKEND_URL}/cart/${localStorage.getItem('user_id')}/` + productId,
         config,
       )
-      .then((response) => {
-        console.log(response.data)
-      })
-      .catch((error) => {
-        console.log(error)
-      })
+      .then((response) => {})
+      .catch((error) => {})
   }
 
   //get the cart
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/api/cart/${localStorage.getItem('user_id')}`, config)
+      .get(`${process.env.REACT_APP_BACKEND_URL}/cart/${localStorage.getItem('user_id')}`, config)
       .then((response) => {
-        // console.log(response.data)
         setUserId(response.data.userId)
         setCartId(response.data.cartId)
         setCart(response.data.products)
       })
-      .catch((error) => {
-        console.log(error)
-      })
+      .catch((error) => {})
   }, [cart])
 
   return (
@@ -99,15 +94,6 @@ export default function ShoppingCart() {
         <hr className="tw-border-t tw-border-gray-800 tw-dark:border-gray-300 tw-h-px tw-w-full tw-my-3" />
       </div>
       <div className="tw-justify-end tw-max-w-3xl tw-mx-auto tw-p-1 tw-flex-col tw-items-end ">
-        {/* Display total price */}
-        {/* <p>Total Price: $25000</p>
-        <br />
-        <a
-          href="#"
-          className="tw-bg-blue-500 tw-text-white tw-py-2 tw-px-4 tw-rounded-lg tw-mt-1 tw-self-end tw-ml-auto tw-text-right"
-        >
-          Checkout
-        </a> */}
         <Container className="cart-footer">
           <Row>
             <Col></Col>

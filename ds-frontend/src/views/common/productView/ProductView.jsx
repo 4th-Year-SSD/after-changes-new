@@ -45,7 +45,7 @@ const ProductView = () => {
 
   useEffect(() => {
     fetchData()
-    console.log(product)
+
   }, [])
 
   const fetchData = async () => {
@@ -57,7 +57,7 @@ const ProductView = () => {
         setLoading(false)
       }
     } catch (error) {
-      console.log(error)
+
       setLoading(false)
     }
   }

@@ -2,7 +2,7 @@
 // const baseURL = 'http://localhost:3010/api/commission/'
 import axios from 'axios'
 export const axiosInstance = axios.create({
-  baseURL: `http://localhost:3001/api`,
+  baseURL: `${process.env.REACT_APP_BACKEND_URL}`,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -18,7 +18,7 @@ export const addCommission = async (commission, csrf_token) => {
     commission_percentage: commission,
     csrf_token: csrf_token,
   })
-  console.log('result: ', result)
+
   return result
 }
 

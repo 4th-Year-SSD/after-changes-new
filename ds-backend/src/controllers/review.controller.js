@@ -40,7 +40,7 @@ export const getReviewByIdController = asyncHandler(async (req, res) => {
 });
 
 export const getReviewsController = asyncHandler(async (req, res) => {
-  console.log("req params: ", req.query);
+
   const response = await getReviewsService(req.query);
   if (!response)
     return makeResponse({

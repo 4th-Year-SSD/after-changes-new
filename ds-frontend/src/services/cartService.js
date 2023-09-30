@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const axiosInstance = axios.create({
-  baseURL: `http://localhost:3001/api`,
+  baseURL: `${process.env.REACT_APP_BACKEND_URL}`,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -21,14 +21,15 @@ export const getCartItems = async () => {
   return (await axiosInstance.get(`/cart/${userId}/`)).data
 }
 
-export const addItemToCart = async (productId) => {
+export const addItemToCart = async (productId, csrf_token) => {
   const formData = {
     userId: userId,
     products: [productId],
+    csrf_token:csrf_token
   }
   try {
     const res = await axiosInstance.post(`/cart/`, formData)
   } catch (er) {
-    console.log(er)
+//
   }
 }

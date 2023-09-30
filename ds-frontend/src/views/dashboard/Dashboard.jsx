@@ -3,16 +3,17 @@ import { useState, useEffect } from 'react'
 import { axiosInstance } from '../../services/core/axios'
 import axios from 'axios'
 export default function Home() {
+  const [csrf_token,setCsrfToken] = useState()
   const clickButton = () => {
     axiosInstance
-      .put(`/user/${localStorage.getItem('user_id')}`)
+      .put(`/user/${localStorage.getItem('user_id')}`, { csrf_token: csrf_token })
       .then((res) => {
         if (res.status === 201 || res.status === 200) {
-          console.log(res)
-        } else console.log(res.status)
+          //console.log(res)
+        } 
       })
       .catch((error) => {
-        console.log(error)
+       // console.log(error)
       })
       .then(() => {
         // always executed
@@ -21,11 +22,11 @@ export default function Home() {
 
   useEffect(() => {
     async function fetchToken() {
-      const response = await fetch('http://localhost:3001/csrf', {
+      const response = await fetch(`${process.env.REACT_APP_DOMAIN}csrf`, {
         credentials: 'include',
       })
       const data = await response.json()
-      localStorage.setItem('token', data.token)
+      setCsrfToken(data)
     }
 
     fetchToken()

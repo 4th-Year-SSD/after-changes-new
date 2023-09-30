@@ -24,7 +24,7 @@ const AllProduct = (props) => {
           type: 'fetchProductsAndChangeState',
           payload: responseData.data,
         })
-        console.log(responseData.data)
+       
         setLoading(false)
       }
     }, 1000)
@@ -33,16 +33,16 @@ const AllProduct = (props) => {
   const deleteProductReq = async (pId) => {
     let deleteC = await deleteProduct(pId)
     if (deleteC.error) {
-      console.log(deleteC.error)
+    //
     } else if (deleteC.success) {
-      console.log(deleteC.success)
+      //
       fetchData()
     }
   }
 
   /* This method call the editmodal & dispatch product context */
   const editProduct = (pId, product, type) => {
-    console.log(product)
+
     if (type) {
       dispatch({
         type: 'editProductModalOpen',

@@ -15,8 +15,8 @@ const DefaultLayout = () => {
 
   const breadcrumbs = getRouteName(currentLocation, routes)
   useEffect(() => {
-    console.log(currentLocation)
-    console.log(breadcrumbs)
+
+  
   }, [])
   return (
     <>

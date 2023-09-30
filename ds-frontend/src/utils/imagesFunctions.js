@@ -16,7 +16,7 @@ export const imageUpload = async (selectedFile, imageFolder) => {
 
     return imageUrl
   } catch (error) {
-    console.log(error)
+
     return null
   }
 }
@@ -26,6 +26,6 @@ export const removeImage = async (imageUrl) => {
   try {
     await deleteObject(imageRef)
   } catch (error) {
-    console.log(error)
+    //console.log(error)
   }
 }

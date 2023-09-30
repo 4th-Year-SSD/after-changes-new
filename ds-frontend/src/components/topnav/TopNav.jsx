@@ -34,13 +34,11 @@ function TopNav() {
     if (localStorage.getItem('role') === 'BUYER') {
       const id = localStorage.getItem('user_id')
       axios
-        .get(`http://localhost:3001/api/cart/getCartCount/${id}`, config)
+        .get(`${process.env.REACT_APP_BACKEND_URL}/cart/getCartCount/${id}`, config)
         .then((response) => {
           setNoOfItems(response.data.count)
         })
-        .catch((error) => {
-          console.log(error)
-        })
+        .catch((error) => {})
     }
   }
   useEffect(() => {

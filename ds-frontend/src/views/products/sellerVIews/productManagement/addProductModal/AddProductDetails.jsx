@@ -62,7 +62,7 @@ const AddProductDetail = () => {
 
     try {
       let responseData = await createProduct(fData ,csrf_token)
-      console.log(responseData)
+
       if (responseData.success) {
         fetchData()
         setFdata({
@@ -102,7 +102,7 @@ const AddProductDetail = () => {
         }, 2000)
       }
     } catch (error) {
-      console.log(error)
+  //
     }
   }
 
@@ -138,11 +138,11 @@ const AddProductDetail = () => {
           success: false,
           pImages: [...prevState.pImages, imageUrl],
         }))
-        console.log(imageUrl)
+
         setSelectedFile(null)
       })
       .catch((error) => {
-        console.log(error)
+  //
       })
   }
 
@@ -159,17 +159,17 @@ const AddProductDetail = () => {
           pImages: prevState.pImages.filter((url) => url !== imageUrl),
         })),
 
-        console.log('Image removed from Firebase Storage'),
+      
         setSelectedFile(null),
       )
       .catch((err) => {
-        console.log(err)
+ //
       })
   }
 
   useEffect(() => {
     async function fetchToken() {
-      const response = await fetch('http://localhost:3001/csrf', {
+      const response = await fetch(`${process.env.REACT_APP_DOMAIN}csrf`, {
         credentials: 'include',
       })
       const data = await response.json()

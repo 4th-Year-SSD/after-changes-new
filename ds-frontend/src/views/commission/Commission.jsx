@@ -17,7 +17,7 @@ export default function UseFormControl() {
         setCommission(res.data.commission_percentage)
       })
       .catch((err) => {
-        console.log(err)
+        
       })
   }, [])
 
@@ -32,12 +32,12 @@ export default function UseFormControl() {
         setCommission(res.data.commission)
       })
       .catch((err) => {
-        console.log(err)
+    
       })
   }
   useEffect(() => {
     async function fetchToken() {
-      const response = await fetch('http://localhost:3001/csrf', {
+      const response = await fetch(`${process.env.REACT_APP_DOMAIN}csrf`, {
         credentials: 'include',
       })
       const data = await response.json()

@@ -12,28 +12,21 @@ export default function OrderAdminTable() {
   const updateOrderStatus = (orderId, status) => {
     axios
       .put(
-        `http://localhost:3001/api/order/updateOrderStatus/${orderId}`,
+        `${process.env.REACT_APP_BACKEND_URL}/order/updateOrderStatus/${orderId}`,
         { orderStatus: status },
         config,
       )
-      .then((res) => {
-        console.log(res.data)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+      .then((res) => {})
+      .catch((err) => {})
   }
 
   useEffect(() => {
     axios
-      .get('http://localhost:3001/api/order/getAllOrders', config)
+      .get(`${process.env.REACT_APP_BACKEND_URL}/order/getAllOrders`, config)
       .then((res) => {
-        console.log(res.data)
         setOrderData(res.data)
       })
-      .catch((err) => {
-        console.log(err)
-      })
+      .catch((err) => {})
   })
   return (
     <div>

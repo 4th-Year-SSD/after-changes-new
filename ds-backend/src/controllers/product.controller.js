@@ -22,7 +22,7 @@ export const getAllProduct = asyncHandler(async (req, res) => {
       });
     }
   } catch (err) {
-    console.log(err);
+   // console.log(err);
   }
 });
 
@@ -31,7 +31,7 @@ export const getProductCount = async () => {
     let count = await Product.count();
     return count;
   } catch (err) {
-    console.log(err);
+    //=console.log(err);
   }
 };
 
@@ -63,7 +63,7 @@ export const postAddProduct = asyncHandler(async (req, res) => {
         { new: true },
         (err, updatedSeller) => {
           if (err) {
-            console.log(err);
+           // console.log(err);
             // handle any errors that occur
             return res.status(500).json({ error: "Error updating seller" });
           }
@@ -76,7 +76,7 @@ export const postAddProduct = asyncHandler(async (req, res) => {
       );
     }
   } catch (err) {
-    console.log(err);
+   
     return res.status(500).json({ error: "Error creating product" });
   }
 });
@@ -96,7 +96,7 @@ export const getDeleteProduct = asyncHandler(async (req, res) => {
         { new: true },
         (err, updatedSeller) => {
           if (err) {
-            console.log(err);
+           // console.log(err);
             // handle any errors that occur
             return res.status(500).json({ error: "Error updating seller" });
           }
@@ -109,7 +109,7 @@ export const getDeleteProduct = asyncHandler(async (req, res) => {
       );
     }
   } catch (err) {
-    console.log(err);
+    //(err);
     return res.status(500).json({ error: "Error deleting product" });
   }
 });
@@ -123,7 +123,7 @@ export const editProduct = asyncHandler(async (req, res) => {
 
     return res.json({ success: "Product edit successfully" });
   } catch (err) {
-    console.log(err);
+   // console.log(err);
     return res.status(500).json({ error: "Error editing product" });
   }
 });
@@ -140,7 +140,7 @@ export const getAllProductOnSale = asyncHandler(async (req, res) => {
       });
     }
   } catch (err) {
-    console.log(err);
+   // console.log(err);
   }
 });
 
@@ -156,7 +156,7 @@ export const getSingleProduct = asyncHandler(async (req, res) => {
       });
     }
   } catch (err) {
-    console.log(err);
+   // console.log(err);
   }
 });
 

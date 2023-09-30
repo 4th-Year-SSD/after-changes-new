@@ -22,22 +22,19 @@ const Checkout = () => {
   React.useEffect(() => {
     getCartItems()
       .then((res) => setCartItems(res))
-      .catch((err) => console.log(err))
-    // getMerchantInfo()
-    //   .then((res) => setMerchantInfo(res))
-    //   .catch((err) => console.log(err))
+      .catch((err) => { })
+
     getMe()
       .then((res) => {
-        console.log('CHECKOUT USER RESPONSE:::', res)
+   
         setUser(res)
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {})
     getTotalPrice()
-      .then((res) => setTotalPrice(res))
-      .catch((err) => console.log(err))
+      .then((res) => {})
+      .catch((err) => {})
   }, [])
-  console.log('cartItems in checkout page', cartItems)
-  console.log('user in checkout page', user)
+
 
   const handleProvinceChange = (e) => {
     setDeliveryProvince(e.target.value)
@@ -77,9 +74,9 @@ const Checkout = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log('e in checkout', e)
+
     const form = new FormData(e.target)
-    console.log('form data in checkout', form)
+
     const formData = {}
     form.forEach((value, key) => (formData[key] = value))
     const order = {
@@ -110,7 +107,7 @@ const Checkout = () => {
         postalCode: form.postal_code,
       },
     }
-    console.log('newDelivery', newDelivery)
+
     createDelivery(newDelivery)
   }
 

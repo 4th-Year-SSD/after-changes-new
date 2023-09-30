@@ -13,7 +13,7 @@ export default function CartItem(props) {
   const handleChange = (action, product, quantity) => {
     let prevQuantity = quantity
     setQuantity((quantity) => {
-      console.log('quantity:', quantity)
+    
       if (action === 'inc') {
         prevQuantity = quantity + 1
         return prevQuantity
@@ -31,12 +31,12 @@ export default function CartItem(props) {
       quantity: prevQuantity,
     }
     axios
-      .put(`http://localhost:3001/api/cart/642d7b2fadc38c896ac0a75e`, payload, config)
+      .put(`${process.env.REACT_APP_BACKEND_URL}/cart/642d7b2fadc38c896ac0a75e`, payload, config)
       .then((response) => {
-        console.log(response.data)
+
       })
       .catch((error) => {
-        console.log(error)
+  
       })
   }
 

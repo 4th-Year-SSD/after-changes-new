@@ -37,7 +37,7 @@ export const GetContries = async ({ setLoading, setCountries }) => {
 export const SendEmail = async ({ fullName, email, phone, message, setSend }) => {
   try {
     const datas = { fullName, email, phone, message }
-    let res = await axios.post(`http://localhost:3001/api/send`, datas)
+    let res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/send`, datas)
     if (res) {
       setSend(res.data)
     }

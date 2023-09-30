@@ -68,9 +68,9 @@ const EditProductModal = (props) => {
   const submitForm = async (e) => {
     e.preventDefault()
     if (editformData.pImages > 1) {
-      console.log('UploaImage ')
+  //
     } else {
-      console.log('Image uploading')
+ //
     }
     try {
       let responseData = await editProduct(editformData )
@@ -93,7 +93,7 @@ const EditProductModal = (props) => {
         }, 2000)
       }
     } catch (error) {
-      console.log(error)
+//
     }
   }
   const handleFileSelect = (event) => {
@@ -128,11 +128,11 @@ const EditProductModal = (props) => {
           success: false,
           pImages: [...prevState.pImages, imageUrl],
         }))
-        console.log(imageUrl)
+
         setSelectedFile(null)
       })
       .catch((error) => {
-        console.log(error)
+
       })
   }
 
@@ -149,16 +149,16 @@ const EditProductModal = (props) => {
           pImages: prevState.pImages.filter((url) => url !== imageUrl),
         })),
 
-        console.log('Image removed from Firebase Storage'),
+      
         setSelectedFile(null),
       )
       .catch((err) => {
-        console.log(err)
+    
       })
   }
   useEffect(() => {
     async function fetchToken() {
-      const response = await fetch('http://localhost:3001/csrf', {
+      const response = await fetch(`${process.env.REACT_APP_DOMAIN}csrf`, {
         credentials: 'include',
       })
       const data = await response.json()

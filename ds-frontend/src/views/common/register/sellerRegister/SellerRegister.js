@@ -31,7 +31,7 @@ const SellerRegister = () => {
     if (inForm.checkValidity() === false) {
       setValidated(true)
     } else {
-      console.log(form)
+   
       //if the form is valid send the user entered data
       axiosInstance
         .post('/auth/register', { user:form })
@@ -49,7 +49,7 @@ const SellerRegister = () => {
         })
         .catch(function (error) {
           // handle error
-          console.log(error)
+       
         })
         .then(function () {
           // always executed

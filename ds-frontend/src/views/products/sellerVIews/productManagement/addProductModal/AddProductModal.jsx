@@ -1,7 +1,5 @@
-import React, { Fragment, useContext, useState, useEffect } from 'react'
-import { ProductContext } from '../Products'
+import React, { Fragment, useEffect } from 'react'
 
-import { createProduct, getAllProduct } from '../../../../../services/productService'
 
 import AddProductDetail from './AddProductDetails'
 

@@ -1,10 +1,9 @@
 import { Container, Row, Col } from 'react-bootstrap'
-import DrugsImage from '../../assets/images/landing-page/drugs-image.png'
 import './herbCard.scoped.css'
 import Button from 'react-bootstrap/Button'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { addItemToCart } from '../../services/cartService'
+
 
 export default function HerbCard({ product }) {
   const navigate = useNavigate()

@@ -184,10 +184,10 @@ export const confirmProduct = async (pPid ,csrf_token) => {
       /* Read more about handling dismissals below */
       result.dismiss === Swal.DismissReason.cancel
     ) {
-      swalWithBootstrapButtons.fire(
-        'Cancelled',
-        'Product visibility status is not updated :)',
-        'warning',
+      await swalWithBootstrapButtons.fire(
+          'Cancelled',
+          'Product visibility status is not updated :)',
+          'warning',
       )
     }
   } catch (error) {

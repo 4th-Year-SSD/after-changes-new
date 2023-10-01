@@ -16,7 +16,7 @@ export const { invalidCsrfTokenError, generateToken, doubleCsrfProtection } =
     cookieName: "x-csrf-token",
  getTokenFromRequest: (req) => {
   // Get the CSRF token from the header.
-  const csrfToken = req.headers["x-csrf-token"];
+  let csrfToken = req.headers["x-csrf-token"];
 
   // If the CSRF token is not in the header, check the body.
   if (csrfToken === undefined) {
@@ -30,7 +30,7 @@ export const { invalidCsrfTokenError, generateToken, doubleCsrfProtection } =
 
 // Error handling, validation error interception
 export const csrfErrorHandler = (error, req, res, next) => {
-  if (error == invalidCsrfTokenError) {
+  if (error === invalidCsrfTokenError) {
     res.status(403).json({
       error: "csrf validation error",
     });

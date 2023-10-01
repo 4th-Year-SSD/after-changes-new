@@ -13,10 +13,9 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import Form from 'react-bootstrap/Form'
 import { Link, NavLink } from 'react-router-dom'
 import './topnav.scoped.css'
-import axios from 'axios'
 import { useState, useEffect } from 'react'
 import React from 'react'
-import socketIOClient from 'socket.io-client'
+
 import { Menu, Dropdown, message, Badge } from 'antd'
 
 //export const socket = socketIOClient('http://localhost:3002')
@@ -30,20 +29,20 @@ function TopNav() {
   //get no of items in the cart
 
   //notification
-  const fetchCartCount = () => {
-    if (localStorage.getItem('role') === 'BUYER') {
-      const id = localStorage.getItem('user_id')
-      axios
-        .get(`${process.env.REACT_APP_BACKEND_URL}/cart/getCartCount/${id}`, config)
-        .then((response) => {
-          setNoOfItems(response.data.count)
-        })
-        .catch((error) => {})
-    }
-  }
-  useEffect(() => {
-    //fetchCartCount()
-  }, [])
+  // const fetchCartCount = () => {
+  //   if (localStorage.getItem('role') === 'BUYER') {
+  //     const id = localStorage.getItem('user_id')
+  //     axios
+  //       .get(`${process.env.REACT_APP_BACKEND_URL}/cart/getCartCount/${id}`, config)
+  //       .then((response) => {
+  //         setNoOfItems(response.data.count)
+  //       })
+  //       .catch((error) => {})
+  //   }
+  // }
+  // useEffect(() => {
+  //   //fetchCartCount()
+  // }, [])
 
   const [feeds, setFeeds] = useState([])
   const [isNewFeed, setIsNewFeed] = useState(false)
@@ -212,7 +211,7 @@ function TopNav() {
                         <a className="dropdown-item" href="/admin/dashboard">
                           Profile
                         </a>
-                      ) : localStorage.getItem('role') == 'BUYER' ? (
+                      ) : localStorage.getItem('role') === 'BUYER' ? (
                         <a className="dropdown-item" href="/user/orderview">
                           Profile
                         </a>

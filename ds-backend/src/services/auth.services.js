@@ -1,4 +1,3 @@
-import User from "../models/user.model";
 import bcrypt from "bcrypt";
 import { getOneUser, createUser } from "../repository/user.repository";
 import { createAdmin } from "../repository/admin.repository";

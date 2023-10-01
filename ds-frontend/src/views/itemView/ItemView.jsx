@@ -1,15 +1,10 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import SideDrawerItem from '../../components/sideDrawerItem/SideDrawerItem'
 import { TopNav } from '../../components'
-import { Button, Col, Container, Row } from 'react-bootstrap'
+import {  Col, Container, Row } from 'react-bootstrap'
 import HerbCard from '../../components/herbCard/HerbCard'
 import './itemView.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSync } from '@fortawesome/free-solid-svg-icons'
 import { getAllProduct } from '../../services/productService'
-import { productContext } from '../../context/productContext'
-
-//const products = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] // example array of products, replace with your own data
 export default function ItemView() {
   const [products, setProducts] = useState([])
   const [currentPage, setCurrentPage] = useState(1)

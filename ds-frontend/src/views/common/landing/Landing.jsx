@@ -14,16 +14,16 @@ import Image3 from '../../../assets/images/landing-slider/image3.jpg'
 import Image4 from '../../../assets/images/landing-slider/image4.jpg'
 import { Footer } from '../../../components'
 import { Link } from 'react-router-dom'
-import { getAllProductOnSale } from '../../../services/productService'
+
 
 export default function Landing() {
   const navigate = useNavigate()
-  const [images, setImages] = useState([
+  const images=[
     { src: Image1, alt: 'Image 1' },
     { src: Image2, alt: 'Image 2' },
     { src: Image3, alt: 'Image 3' },
     { src: Image4, alt: 'Image 4' },
-  ])
+  ]
 
   const [currentIndex, setCurrentIndex] = useState(0)
 

@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import { type } from "os";
+
 
 const SellerSchema = new Schema(
   {

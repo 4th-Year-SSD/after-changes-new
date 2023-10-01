@@ -3,7 +3,7 @@ import axios from 'axios'
 
 export default function OrderAdminTable() {
   const [orderData, setOrderData] = useState([])
-  const [orderId, setOrderId] = useState('')
+  
 
   const config = {
     headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` },
@@ -17,7 +17,7 @@ export default function OrderAdminTable() {
         config,
       )
       .then((res) => {})
-      .catch((err) => {})
+      .catch(() => {})
   }
 
   useEffect(() => {
@@ -26,7 +26,7 @@ export default function OrderAdminTable() {
       .then((res) => {
         setOrderData(res.data)
       })
-      .catch((err) => {})
+      .catch(() => {})
   })
   return (
     <div>

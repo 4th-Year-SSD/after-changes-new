@@ -1,6 +1,5 @@
 import React, { Fragment, useContext, useEffect, useState } from 'react'
 import { getSellerAllProduct, deleteProduct } from '../../../../../services/productService'
-import moment from 'moment'
 import { ProductContext } from '../Products'
 import ProductTable from '../productTable/ProductTable'
 

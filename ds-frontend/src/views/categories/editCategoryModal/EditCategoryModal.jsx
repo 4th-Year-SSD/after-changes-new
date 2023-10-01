@@ -2,7 +2,7 @@ import React, { Fragment, useContext, useState, useEffect } from 'react'
 import { CategoryContext } from './index'
 import { editCategory, getAllCategory } from './FetchApi'
 
-const EditCategoryModal = (props) => {
+const EditCategoryModal = () => {
   const { data, dispatch } = useContext(CategoryContext)
 
   const [des, setDes] = useState('')
@@ -47,7 +47,7 @@ const EditCategoryModal = (props) => {
     <Fragment>
       {/* Black Overlay */}
       <div
-        onClick={(e) => dispatch({ type: 'editCategoryModalClose' })}
+        onClick={() => dispatch({ type: 'editCategoryModalClose' })}
         className={`${
           data.editCategoryModal.modal ? '' : 'hidden'
         } fixed top-0 left-0 z-30 w-full h-full bg-black opacity-50`}
@@ -66,7 +66,7 @@ const EditCategoryModal = (props) => {
             {/* Close Modal */}
             <span
               style={{ background: '#303031' }}
-              onClick={(e) => dispatch({ type: 'editCategoryModalClose' })}
+              onClick={() => dispatch({ type: 'editCategoryModalClose' })}
               className="cursor-pointer text-gray-100 py-2 px-2 rounded-full"
             >
               <svg
@@ -117,7 +117,7 @@ const EditCategoryModal = (props) => {
           <div className="flex flex-col space-y-1 w-full pb-4 md:pb-6">
             <button
               style={{ background: '#303031' }}
-              onClick={(e) => submitForm()}
+              onClick={() => submitForm()}
               className="rounded-full bg-gray-800 text-gray-100 text-lg font-medium py-2"
             >
               Create category

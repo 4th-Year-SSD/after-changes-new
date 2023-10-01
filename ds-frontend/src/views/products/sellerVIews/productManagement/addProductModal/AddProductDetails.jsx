@@ -64,7 +64,7 @@ const AddProductDetail = () => {
       let responseData = await createProduct(fData ,csrf_token)
 
       if (responseData.success) {
-        fetchData()
+        await fetchData()
         setFdata({
           ...fData,
           pName: '',

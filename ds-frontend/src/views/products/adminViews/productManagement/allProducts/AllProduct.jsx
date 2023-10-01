@@ -36,7 +36,7 @@ const AllProduct = (props) => {
     let confirmProductResponse = await confirmProduct(pId)
 
     if (confirmProductResponse?.error) {
-      Swal.fire({
+      await Swal.fire({
         icon: 'error',
         title: 'Oops...',
         text: 'Something went wrong!',
@@ -52,7 +52,7 @@ const AllProduct = (props) => {
       message.success('Feed created successfully')
 
    
-      fetchData()
+      await fetchData()
     }
   }
 

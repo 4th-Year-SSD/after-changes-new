@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import OrderCard from '../../components/orderCard/OrderCard'
-import { TopNav } from '../../components'
 import './orderView.scoped.css'
 import { Col, Container, Row } from 'react-bootstrap'
 import axios from 'axios'

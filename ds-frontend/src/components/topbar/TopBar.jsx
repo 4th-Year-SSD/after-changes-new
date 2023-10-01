@@ -1,10 +1,9 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './topbar.css'
 import { logout } from '../../context/commonFunctions'
 import Container from 'react-bootstrap/Container'
 import Logo from '../../assets/images/logo.png'
-import socketIOClient from 'socket.io-client'
-import { Menu, Dropdown, message } from 'antd'
+
+import { Menu, message } from 'antd'
 import { useState, useEffect } from 'react'
 
 //export const socket = socketIOClient('http://localhost:3002')

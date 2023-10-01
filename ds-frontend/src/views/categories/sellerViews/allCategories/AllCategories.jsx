@@ -5,7 +5,7 @@ import moment from 'moment'
 
 const apiURL = process.env.REACT_APP_API_URL
 
-const AllCategory = (props) => {
+const AllCategory = () => {
   const { data, dispatch } = useContext(CategoryContext)
   const { categories, loading } = data
 
@@ -34,7 +34,7 @@ const AllCategory = (props) => {
      // console.log(deleteC.error)
     } else if (deleteC.success) {
     //  console.log(deleteC.success)
-      fetchData()
+      await fetchData()
     }
   }
 
@@ -150,7 +150,7 @@ const CategoryTable = ({ category, deleteCat, editCat }) => {
         <td className="p-2 text-center">{moment(category.updatedAt).format('lll')}</td>
         <td className="p-2 flex items-center justify-center">
           <span
-            onClick={(e) => editCat(category._id, true, category.cDescription, category.cStatus)}
+            onClick={() => editCat(category._id, true, category.cDescription, category.cStatus)}
             className="cursor-pointer hover:bg-gray-200 rounded-lg p-2 mx-1"
           >
             <svg
@@ -168,7 +168,7 @@ const CategoryTable = ({ category, deleteCat, editCat }) => {
             </svg>
           </span>
           <span
-            onClick={(e) => deleteCat(category._id)}
+            onClick={() => deleteCat(category._id)}
             className="cursor-pointer hover:bg-gray-200 rounded-lg p-2 mx-1"
           >
             <svg

@@ -2,7 +2,6 @@ import express from "express";
 import {
   getAll,
   update,
-  deleteUser,
   getById,
   getMyDetails,
 } from "../controllers/user.controller";
@@ -32,6 +31,5 @@ userRouter.get(
   csrfErrorHandler,
   getById
 );
-// userRouter.delete('/:id', protect, deleteUser)
 
 export default userRouter;

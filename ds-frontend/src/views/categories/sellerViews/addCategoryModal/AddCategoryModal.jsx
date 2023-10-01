@@ -2,7 +2,7 @@ import React, { Fragment, useContext, useState } from 'react'
 import { CategoryContext } from './index'
 import { createCategory, getAllCategory } from './FetchApi'
 
-const AddCategoryModal = (props) => {
+const AddCategoryModal = () => {
   const { data, dispatch } = useContext(CategoryContext)
 
   const alert = (msg, type) => <div className={`bg-${type}-200 py-2 px-4 w-full`}>{msg}</div>
@@ -46,7 +46,7 @@ const AddCategoryModal = (props) => {
     try {
       let responseData = await createCategory(fData)
       if (responseData.success) {
-        fetchData()
+        await fetchData()
         setFdata({
           ...fData,
           cName: '',
@@ -84,7 +84,7 @@ const AddCategoryModal = (props) => {
     <Fragment>
       {/* Black Overlay */}
       <div
-        onClick={(e) => dispatch({ type: 'addCategoryModal', payload: false })}
+        onClick={() => dispatch({ type: 'addCategoryModal', payload: false })}
         className={`${
           data.addCategoryModal ? '' : 'hidden'
         } fixed top-0 left-0 z-30 w-full h-full bg-black opacity-50`}
@@ -103,7 +103,7 @@ const AddCategoryModal = (props) => {
             {/* Close Modal */}
             <span
               style={{ background: '#303031' }}
-              onClick={(e) => dispatch({ type: 'addCategoryModal', payload: false })}
+              onClick={() => dispatch({ type: 'addCategoryModal', payload: false })}
               className="cursor-pointer text-gray-100 py-2 px-2 rounded-full"
             >
               <svg

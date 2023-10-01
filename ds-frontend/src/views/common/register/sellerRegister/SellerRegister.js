@@ -11,7 +11,7 @@ const SellerRegister = () => {
   const [validated, setValidated] = useState(false)
 
   const [form, setForm] = useState({
-    role:"SELLER",
+    role:`${process.env.REACT_APP_BUYER_ROLE}`,
     name: {
       first_name: '',
       last_name: '',

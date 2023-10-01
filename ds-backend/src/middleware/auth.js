@@ -23,21 +23,21 @@ export const protect = asyncHandler(async (req, res, next) => {
 });
 
 export const adminProtect = asyncHandler(async (req, res, next) => {
-  if (req.user.role !== "ADMIN")
+  if (req.user.role !== `${process.env.ADMIN_ROLE}`)
     return makeResponse({ res, status: 403, message: "Unauthorized" });
   next();
 });
 
 //To protect routes for only buyers
 export const buyerProtect = asyncHandler(async (req, res, next) => {
-  if (req.user.role !== "BUYER")
+  if (req.user.role !== `${process.env.BUYER_ROLE}`)
     return makeResponse({ res, status: 403, message: "Unauthorized" });
   next();
 });
 
 //To protect routes for only sellers
 export const sellerProtect = asyncHandler(async (req, res, next) => {
-  if (req.user.role !== "SELLER")
+  if (req.user.role !== `${process.env.SELLER_ROLE}`)
     return makeResponse({ res, status: 403, message: "Unauthorized" });
   next();
 });

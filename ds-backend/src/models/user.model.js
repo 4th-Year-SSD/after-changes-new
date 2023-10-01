@@ -4,20 +4,20 @@ import aggregatePaginate from "mongoose-aggregate-paginate-v2";
 const UserSchema = new mongoose.Schema({
   role: {
     type: String,
-    enum: ["BUYER", "ADMIN", "SELLER"],
-    default: "BUYER",
+    enum: [`${process.env.BUYER_ROLE}`, `${process.env.ADMIN_ROLE}`, `${process.env.SELLER_ROLE}`],
+    default: `${process.env.BUYER_ROLE}`,
   },
   buyer: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Buyer",
+    ref: `${process.env.BUYER_ROLE}`,
   },
   seller: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Seller",
+    ref: `${process.env.SELLER_ROLE}`,
   },
   admin: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Admin",
+    ref: `${process.env.ADMIN_ROLE}`,
   },
   name: {
     first_name: {

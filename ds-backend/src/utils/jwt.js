@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-
+require("dotenv").config();
 export const sendTokenResponse = async (res, req, user, message) => {
   const accessToken = generateJWTToken(user);
 

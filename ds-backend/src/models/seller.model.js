@@ -21,4 +21,4 @@ const SellerSchema = new Schema(
   }
 );
 
-module.exports = mongoose.model("Seller", SellerSchema);
+module.exports = mongoose.model(`${process.env.SELLER_ROLE}`, SellerSchema);

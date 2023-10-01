@@ -31,7 +31,7 @@ export const googleUserSignIn = async ({ email, name }) => {
     return userExist;
   }
   const user = {
-    role: "BUYER",
+    role: `${process.env.BUYER_ROLE}`,
     password: "password",
     name: name,
     email: email,
@@ -54,14 +54,14 @@ export const registerUser = async ({ user, specificData }) => {
     );
   });
 
-  if (user.role === "BUYER") {
+  if (user.role === `${process.env.BUYER_ROLE}`) {
     // create a new buyer
     var newBuyer = await createBuyer(specificData);
     // if buyer not created
-  } else if (user.role === "ADMIN") {
+  } else if (user.role === `${process.env.ADMIN_ROLE}`) {
     // create a new admin
     var newAdmin = await createAdmin(specificData);
-  } else if (user.role === "SELLER") {
+  } else if (user.role === `${process.env.SELLER_ROLE}`) {
     var newSeller = await insertSeller(specificData);
   }
   // create a new user
@@ -69,9 +69,9 @@ export const registerUser = async ({ user, specificData }) => {
   const registeredUser = await createUser({
     ...user,
     password: encryptedPassword,
-    admin: user.role === "ADMIN" ? newAdmin._id : null,
-    buyer: user.role === "BUYER" ? newBuyer._id : null,
-    seller: user.role === "SELLER" ? newSeller._id : null,
+    admin: user.role === `${process.env.ADMIN_ROLE}` ? newAdmin._id : null,
+    buyer: user.role === `${process.env.BUYER_ROLE}` ? newBuyer._id : null,
+    seller: user.role === `${process.env.SELLER_ROLE}` ? newSeller._id : null,
   });
 
   return registeredUser;

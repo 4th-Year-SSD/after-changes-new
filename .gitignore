@@ -24,3 +24,7 @@ ds-backend/dist
 .DS_Store
 Thumbs.db
 *.swp
+
+.yarn
+.yarnrc.yml
+qodana.yaml

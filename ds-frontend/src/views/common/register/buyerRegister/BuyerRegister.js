@@ -9,6 +9,7 @@ const BuyerRegister = () => {
   const navigate = useNavigate()
   //useState
   const [validated, setValidated] = useState(false)
+  const [passwordStrength, setPasswordStrength] = useState('none'); // Initialize to 'Weak'
 
   const [form, setForm] = useState({
     role: `${process.env.REACT_APP_BUYER_ROLE}`,
@@ -18,9 +19,12 @@ const BuyerRegister = () => {
     },
     email: '',
     password: '',
+    confirmPassword: '',
     phone: '',
     address: '',
   })
+
+  const [passwordError, setPasswordError] = useState(''); // Initialize to an empty string
 
   //handleSubmit
   const handleSubmit = (e) => {
@@ -30,7 +34,20 @@ const BuyerRegister = () => {
     //check if the form is valid
     if (inForm.checkValidity() === false) {
       setValidated(true)
+    }else if (
+      !/[A-Z]/.test(form.password) || 
+      !/[a-z]/.test(form.password) || 
+      !/\d/.test(form.password)
+    ) {
+      // Check if password is not strong
+      setPasswordError('Password must be strong (contain uppercase, lowercase, and numbers)');
+    } else if (form.password !== form.confirmPassword) {
+      // Check if passwords match
+      setPasswordError("Passwords don't match");
     } else {
+
+       // Reset password error
+       setPasswordError('');
 
       //if the form is valid send the user entered data
       axiosInstance
@@ -68,7 +85,36 @@ const BuyerRegister = () => {
       ...form,
       [name]: value,
     })
+
+  // Check password strength
+  if (/[A-Z]/.test(value) && /[a-z]/.test(value) && /\d/.test(value)) {
+    setPasswordStrength('Strong');
+  } else if (/[a-z]/.test(value) && /\d/.test(value)) {
+    setPasswordStrength('Medium');
+  } else {
+    setPasswordStrength('Weak');
   }
+}
+// Define styles based on password strength
+const getPasswordStrengthStyles = () => {
+  let borderColor = 'gray'; // Default to weak
+  let messageColor = 'gray';
+
+  if (passwordStrength === 'Medium') {
+    borderColor = 'yellow';
+    messageColor = 'yellow';
+  } else if (passwordStrength === 'Weak') {
+    borderColor = '#ff5925';
+    messageColor = '#ff5925';
+  }
+   else if (passwordStrength === 'Strong') {
+    borderColor = '#26d730';
+    messageColor = '#26d730';
+  } return {
+    borderColor,
+    color: messageColor,
+  };
+};
 
   return (
     <>
@@ -175,9 +221,15 @@ const BuyerRegister = () => {
                     placeholder="********"
                     autoComplete="new-password"
                     onChange={handleInput}
+                    style={getPasswordStrengthStyles()} // Apply styles based on password strength
                     className="tw-block tw-w-full tw-p-3 tw-mt-2 tw-text-gray-700 tw-bg-gray-200 tw-appearance-none tw-focus:outline-none tw-focus:bg-gray-300 tw-focus:shadow-inner"
                     required
                   />
+                     <div
+                   className="tw-text-xs tw-mt-1"
+                    style={{ color: getPasswordStrengthStyles().color }}>
+                     Password Strength: {passwordStrength}
+                  </div>
                   <label
                     for="password-confirm"
                     className="tw-block tw-mt-2 tw-text-xs tw-font-semibold tw-text-gray-600 tw-uppercase"
@@ -194,6 +246,9 @@ const BuyerRegister = () => {
                     className="tw-block tw-w-full tw-p-3 tw-mt-2 tw-text-gray-700 tw-bg-gray-200 tw-appearance-none tw-focus:outline-none tw-focus:bg-gray-300 tw-focus:shadow-inner"
                     required
                   />
+                  {passwordError && (
+                <div className="tw-text-red-600 tw-text-xs tw-mt-1">{passwordError}</div>
+                   )}
                 </div>
                 <div className="tw-ml-8">
                   <label

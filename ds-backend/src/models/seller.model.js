@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-
+require("dotenv").config();
 
 const SellerSchema = new Schema(
   {

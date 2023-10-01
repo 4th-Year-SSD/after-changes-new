@@ -3,7 +3,7 @@ const express = require("express");
 import cors from "cors";
 import routes from "./routes/index.routes.js";
 import connectDB from "./database";
-import { generateToken } from "./utils/csrf.js";
+import { generateToken } from "./middleware/csrf.js";
 import cookieParser from "cookie-parser";
 import session from "express-session";
 import https from 'https';
@@ -16,7 +16,7 @@ app.use(express.json({ limit: "1mb" }));
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: `${process.env.CLIENT_URL}`,
     credentials: true,
   })
 );

@@ -7,7 +7,7 @@ import {
 } from "../controllers/user.controller";
 import { protect, adminProtect } from "../middleware/auth";
 const userRouter = express.Router();
-import { doubleCsrfProtection, csrfErrorHandler } from "../utils/csrf";
+import { doubleCsrfProtection, csrfErrorHandler } from "../middleware/csrf";
 userRouter.get(
   "/",
   protect,

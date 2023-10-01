@@ -12,7 +12,7 @@ const SellerRegister = () => {
   const [passwordStrength, setPasswordStrength] = useState('none'); // Initialize to 'Weak'
 
   const [form, setForm] = useState({
-    role:`${process.env.REACT_APP_BUYER_ROLE}`,
+    role:`${process.env.REACT_APP_SELLER_ROLE}`,
     name: {
       first_name: '',
       last_name: '',

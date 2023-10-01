@@ -1,5 +1,4 @@
 import mongoose, { Schema } from "mongoose";
-require("dotenv").config();
 
 const SellerSchema = new Schema(
   {
@@ -21,4 +20,6 @@ const SellerSchema = new Schema(
   }
 );
 
-module.exports = mongoose.model(`${process.env.SELLER_ROLE}`, SellerSchema);
+
+module.exports = mongoose.model(`Seller`, SellerSchema);
+

@@ -58,7 +58,7 @@ const productSchema = new mongoose.Schema({
   },
   pSeller: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: `${process.env.SELLER_ROLE}`,
+    ref: `Seller`,
   }
 });
 

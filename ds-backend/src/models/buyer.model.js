@@ -29,6 +29,6 @@ const BuyerSchema = new mongoose.Schema({
 
 BuyerSchema.plugin(aggregatePaginate);
 
-const Buyer = mongoose.model(`${process.env.BUYER_ROLE}`, BuyerSchema);
+const Buyer = mongoose.model('Buyer', BuyerSchema);
 
 export default Buyer;

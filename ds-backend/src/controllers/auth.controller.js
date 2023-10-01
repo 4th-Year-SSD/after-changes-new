@@ -9,6 +9,7 @@ import { sendTokenResponse } from "../utils/jwt";
 // login user
 export const login = asyncHandler(async (req, res) => {
   const user = await loginUser(req.body);
+
   if (!user) {
     return makeResponse({ res, status: 500, message: "Failed to login user" });
   }

@@ -54,14 +54,14 @@ export const registerUser = async ({ user, specificData }) => {
     );
   });
 
-  if (user.role === `${process.env.BUYER_ROLE}`) {
+  if (user.role === 'BUYER') {
     // create a new buyer
     var newBuyer = await createBuyer(specificData);
     // if buyer not created
-  } else if (user.role === `${process.env.ADMIN_ROLE}`) {
+  } else if (user.role === "ADMIN") {
     // create a new admin
     var newAdmin = await createAdmin(specificData);
-  } else if (user.role === `${process.env.SELLER_ROLE}`) {
+  } else if (user.role === "SELLER") {
     var newSeller = await insertSeller(specificData);
   }
   // create a new user

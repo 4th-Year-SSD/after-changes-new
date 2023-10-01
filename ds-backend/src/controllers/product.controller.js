@@ -6,7 +6,7 @@ import { makeResponse } from "../utils/response";
 
 export const getAllProduct = asyncHandler(async (req, res) => {
   try {
-    let Products = null;
+    let Products
 
     if (req?.user) {
       Products = await Product.find({ pSeller: req?.user?.seller._id }).sort({
@@ -61,7 +61,7 @@ export const postAddProduct = asyncHandler(async (req, res) => {
         { _id: seller._id },
         { $push: { products: newProduct._id } },
         { new: true },
-        (err, updatedSeller) => {
+        (err) => {
           if (err) {
            // console.log(err);
             // handle any errors that occur
@@ -94,7 +94,7 @@ export const getDeleteProduct = asyncHandler(async (req, res) => {
         { _id: seller._id },
         { $pull: { products: id } },
         { new: true },
-        (err, updatedSeller) => {
+        (err) => {
           if (err) {
            // console.log(err);
             // handle any errors that occur
@@ -117,7 +117,7 @@ export const getDeleteProduct = asyncHandler(async (req, res) => {
 export const editProduct = asyncHandler(async (req, res) => {
   const { id } = req.params;
   try {
-    const editedProduct = Product.findByIdAndUpdate(id, req.body, {
+    Product.findByIdAndUpdate(id, req.body, {
       new: true,
     });
 

@@ -1,7 +1,7 @@
 import React, { Fragment, useContext, useState, useEffect, useRef } from 'react'
 import { ProductContext } from '../Products'
 
-import { createProduct, getSellerAllProduct } from '../../../../../services/productService'
+import {  getSellerAllProduct } from '../../../../../services/productService'
 
 import { Badge } from 'react-bootstrap'
 import { imageUpload, removeImage } from '../../../../../utils/imagesFunctions'
@@ -75,7 +75,7 @@ const EditProductModal = (props) => {
     try {
       let responseData = await editProduct(editformData )
       if (responseData.success) {
-        fetchData()
+        await fetchData()
         setEditformdata({ ...editformData, success: responseData.success })
         setTimeout(() => {
           return setEditformdata({

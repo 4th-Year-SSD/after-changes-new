@@ -3,7 +3,7 @@ import { CategoryContext } from './index'
 import AddCategoryModal from './AddCategoryModal'
 import EditCategoryModal from './EditCategoryModal'
 
-const CategoryMenu = (props) => {
+const CategoryMenu = () => {
   const { dispatch } = useContext(CategoryContext)
 
   return (
@@ -13,7 +13,7 @@ const CategoryMenu = (props) => {
           {/* It's open the add category modal */}
           <div
             style={{ background: '#303031' }}
-            onClick={(e) => dispatch({ type: 'addCategoryModal', payload: true })}
+            onClick={() => dispatch({ type: 'addCategoryModal', payload: true })}
             className="cursor-pointer rounded-full p-2 flex items-center justify-center text-gray-100 text-sm font-semibold uppercase"
           >
             <svg

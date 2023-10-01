@@ -82,9 +82,7 @@ export const productReducer = (state, action) => {
           pWeight: '',
         },
       }
-      {
-        /* View a product */
-      }
+  
     case 'viewProductModalOpen':
       return {
         ...state,

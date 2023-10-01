@@ -28,7 +28,8 @@ export const addItemToCart = async (productId, csrf_token) => {
     csrf_token:csrf_token
   }
   try {
-    const res = await axiosInstance.post(`/cart/`, formData)
+    return  await axiosInstance.post(`/cart/`, formData)
+ 
   } catch (er) {
 //
   }

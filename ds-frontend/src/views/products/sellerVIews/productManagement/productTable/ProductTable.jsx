@@ -1,8 +1,7 @@
-import React, { Fragment, useContext, useEffect, useState } from 'react'
+import React, { Fragment } from 'react'
 
 import moment from 'moment'
-import { ProductContext } from '../Products'
-import TableFooter from './TableFooter'
+
 
 const ProductTable = ({ product, deleteProduct, editProduct }) => {
   return (

@@ -1,7 +1,7 @@
 import Review from "../models/review.model";
 import Product from "../models/product.model";
 import Seller from "../models/seller.model";
-import logger from "../utils/logger";
+
 
 // Get the current highest review ID from the database
 const getMaxReviewId = async () => {

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { useEffect } from 'react'
-import FormControl, { useFormControl } from '@mui/material/FormControl'
+import FormControl from '@mui/material/FormControl'
 import OutlinedInput from '@mui/material/OutlinedInput'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
@@ -16,7 +16,7 @@ export default function UseFormControl() {
       .then((res) => {
         setCommission(res.data.commission_percentage)
       })
-      .catch((err) => {
+      .catch(() => {
         
       })
   }, [])
@@ -31,7 +31,7 @@ export default function UseFormControl() {
       .then((res) => {
         setCommission(res.data.commission)
       })
-      .catch((err) => {
+      .catch(() => {
     
       })
   }

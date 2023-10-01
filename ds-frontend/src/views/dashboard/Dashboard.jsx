@@ -1,7 +1,6 @@
 import './dashboard.css'
 import { useState, useEffect } from 'react'
 import { axiosInstance } from '../../services/core/axios'
-import axios from 'axios'
 export default function Home() {
   const [csrf_token,setCsrfToken] = useState()
   const clickButton = () => {

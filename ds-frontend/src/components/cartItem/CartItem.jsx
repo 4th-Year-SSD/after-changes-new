@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import DrugsImage from '../../assets/images/landing-page/drugs-image.png'
+import React, {  useState } from 'react'
+
 import axios from 'axios'
 
 export default function CartItem(props) {
@@ -32,10 +32,10 @@ export default function CartItem(props) {
     }
     axios
       .put(`${process.env.REACT_APP_BACKEND_URL}/cart/642d7b2fadc38c896ac0a75e`, payload, config)
-      .then((response) => {
+      .then(() => {
 
       })
-      .catch((error) => {
+      .catch(() => {
   
       })
   }

@@ -1,23 +1,21 @@
 import * as React from 'react'
-import { useState, useEffect } from 'react'
+import { useState} from 'react'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
-import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
-import AddIcon from '@mui/icons-material/Add'
-import FormControl, { useFormControl } from '@mui/material/FormControl'
+import FormControl from '@mui/material/FormControl'
 import { FormLabel } from '@mui/material'
 import Rating from '@mui/material/Rating'
 import StarIcon from '@mui/icons-material/Star'
 import CloseIcon from '@mui/icons-material/Close'
 import IconButton from '@mui/material/IconButton'
 import { updateProductReview, updateSellerReview } from '../../../../services/reviewService'
-import { getReviewById } from '../../../../services/reviewService'
+
 
 export default function EditReviewCard({reviewDetails, isOpen, onClose}) {
   const [rating, setRating] = useState(reviewDetails.rating)

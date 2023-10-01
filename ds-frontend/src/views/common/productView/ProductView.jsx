@@ -23,10 +23,7 @@ const buttonStyle = {
   color: 'black',
   margin: '10px 10px',
 }
-const contentStyle = {
-  color: 'white',
-  fontSize: '20px',
-}
+
 const bgImg = {
   position: 'absolute',
   zIndex: 1,

@@ -1,5 +1,5 @@
 import Delivery from "../models/delivery.model";
-import logger from "../utils/logger";
+
 
 export const getAllDeliveryRepository = async () => {
   try {

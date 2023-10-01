@@ -8,7 +8,7 @@ const Email = (options) => {
       pass: process.env.PASSWORD, //password
     },
   });
-  transpoter.sendMail(options, (err, info) => {
+  transpoter.sendMail(options, (err) => {
     if (err) {
    
       return;

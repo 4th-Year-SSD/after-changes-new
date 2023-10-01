@@ -1,11 +1,10 @@
 import './login.css'
 import TopNav from '../../../components/topnav/TopNav'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom'
 import { axiosInstance } from '../../../services/core/axios'
-import { GoogleLogin, googleLogout } from '@react-oauth/google'
-import axios from 'axios'
+import { GoogleLogin } from '@react-oauth/google'
 import jwt_decode from 'jwt-decode'
 export default function Login() {
   //email

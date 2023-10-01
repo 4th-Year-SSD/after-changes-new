@@ -12,8 +12,7 @@ const DefaultLayout = () => {
     const currentRoute = routes.find((route) => route.path === pathname)
     return currentRoute ? currentRoute.name : false
   }
-
-  const breadcrumbs = getRouteName(currentLocation, routes)
+  
   useEffect(() => {
 
   

@@ -52,7 +52,7 @@ const updateCart = asyncHandler(async (req, res) => {
     if (cart) {
       const { product, quantity } = req.body;
 
-      const index = cart.products.findIndex((item) => item.product == product);
+      const index = cart.products.findIndex((item) => item.product === product);
       if (index >= 0) {
         cart.products[index].quantity = quantity;
       } else {
@@ -89,7 +89,7 @@ const deleteProductFromCart = asyncHandler(async (req, res) => {
     const cart = await Cart.findOne({ userId: req.params.userId });
     if (cart) {
       cart.products = cart.products.filter(
-        (item) => item.product != req.params.productId
+        (item) => item.product !== req.params.productId
       );
       const updatedCart = await cart.save();
       res.status(200).json(updatedCart);
@@ -131,7 +131,7 @@ const getCartCount = asyncHandler(async (req, res) => {
     const cart = await Cart.findOne({ userId: req.params.userId });
     if (cart) {
       let count = 0;
-      cart.products.forEach((item) => {
+      cart.products.forEach(() => {
         count += 1;
       });
       res.status(200).json({ count });

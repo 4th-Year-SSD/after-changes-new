@@ -18,7 +18,7 @@ const ReviewSchema = new Schema(
     },
     seller: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: `${process.env.SELLER_ROLE}`,
+      ref: `Seller`,
     },
     rating: {
       type: Number,

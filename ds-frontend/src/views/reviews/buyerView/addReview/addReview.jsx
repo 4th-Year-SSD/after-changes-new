@@ -133,7 +133,7 @@ export default function AddReviewCard(reviewCategory) {
                         label="I want to review this product"
                       />
                       <FormControlLabel
-                        value=`${process.env.SELLER_ROLE}`
+                        value='seller'
                         control={<Radio />}
                         label="I want to review the seller of this product"
                       />

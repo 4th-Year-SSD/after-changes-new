@@ -116,8 +116,7 @@ export default function Login() {
           title: 'Failed to login!',
           showConfirmButton: false,
           timer: 2000,
-        })
-        console.log(error)
+        })   
       })
       .then(() => {
         // always executed

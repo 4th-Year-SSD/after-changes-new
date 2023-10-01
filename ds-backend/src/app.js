@@ -26,7 +26,7 @@ app.use(
     secret: "some-secret-key", // Change this to a real secret in production
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false }, // Set secure to true in production if using HTTPS
+    cookie: { secure: true }, // Set secure to true in production if using HTTPS
   })
 );
 

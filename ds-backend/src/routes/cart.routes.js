@@ -9,7 +9,7 @@ const {
   getTotalPrice,
   getCartCount,
 } = require("../controllers/cart.controller");
-import { doubleCsrfProtection,csrfErrorHandler } from "../utils/csrf.js";
+import { doubleCsrfProtection,csrfErrorHandler } from "../middleware/csrf.js";
 
 const cartRouter = express.Router();
 

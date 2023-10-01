@@ -14,17 +14,19 @@ export const { invalidCsrfTokenError, generateToken, doubleCsrfProtection } =
       return "123456789";
     },
     cookieName: "x-csrf-token",
- getTokenFromRequest: (req) => {
+    getTokenFromRequest: (req) => {
+ 
   // Get the CSRF token from the header.
   let csrfToken = req.headers["x-csrf-token"];
 
   // If the CSRF token is not in the header, check the body.
   if (csrfToken === undefined) {
-    csrfToken = req.body.csrf_token;
+    csrfToken = (req.body?.csrf_token)?.token;;
+
   }
 
   // Return the CSRF token.
-  return csrfToken;
+  return csrfToken
 }
   });
 

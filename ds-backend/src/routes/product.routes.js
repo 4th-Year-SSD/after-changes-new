@@ -1,7 +1,7 @@
 import express from "express";
 
 
-import { doubleCsrfProtection, csrfErrorHandler } from "../utils/csrf";
+import { doubleCsrfProtection, csrfErrorHandler } from "../middleware/csrf";
 import {
   getAllProduct,
   postAddProduct,

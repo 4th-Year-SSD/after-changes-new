@@ -2,7 +2,7 @@ import React, { Fragment, useContext, useEffect, useState } from 'react'
 import { getSellerAllProduct, deleteProduct } from '../../../../../services/productService'
 import { ProductContext } from '../Products'
 import ProductTable from '../productTable/ProductTable'
-
+import { logout } from '../../../../../context/commonFunctions'
 const AllProduct = (props) => {
   const { data, dispatch } = useContext(ProductContext)
   const { products } = data
@@ -30,6 +30,13 @@ const AllProduct = (props) => {
   }
 
   const deleteProductReq = async (pId) => {
+
+     if (localStorage.getItem('role') !== process.env.REACT_APP_SELLER_ROLE) {
+       alert('You are not allowed to perform this operation')
+
+       // Forceably sign out the user 3 seconds after the alert is shown.
+       setTimeout(logout, 3000)
+     }
     let deleteC = await deleteProduct(pId)
     if (deleteC.error) {
     //

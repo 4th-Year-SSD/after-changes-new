@@ -5,7 +5,7 @@ import { createProduct, getSellerAllProduct } from '../../../../../services/prod
 import { Badge } from 'react-bootstrap'
 import { imageUpload, removeImage } from '../../../../../utils/imagesFunctions'
 import { categories } from '../../../../../data/dumyCategories'
-
+import { logout } from '../../../../../context/commonFunctions'
 const AddProductDetail = () => {
   const { data, dispatch } = useContext(ProductContext)
 
@@ -52,13 +52,18 @@ const AddProductDetail = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    if (localStorage.getItem('role') !== process.env.REACT_APP_SELLER_ROLE) { 
+          alert('You are not allowed to perform this operation')
 
-    if (fData.pImages?.length > 1) {
-      setFdata({ ...fData, error: 'Please upload at least 1 image' })
-      setTimeout(() => {
-        setFdata({ ...fData, error: false })
-      }, 2000)
+          // Forceably sign out the user 3 seconds after the alert is shown.
+          setTimeout(logout, 3000)
     }
+      if (fData.pImages?.length > 1) {
+        setFdata({ ...fData, error: 'Please upload at least 1 image' })
+        setTimeout(() => {
+          setFdata({ ...fData, error: false })
+        }, 2000)
+      }
 
     try {
       let responseData = await createProduct(fData ,csrf_token)

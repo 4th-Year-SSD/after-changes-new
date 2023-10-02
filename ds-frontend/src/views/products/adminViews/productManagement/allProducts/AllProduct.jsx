@@ -5,6 +5,7 @@ import ProductTable from '../productTable/ProductTable'
 import { Container } from 'react-bootstrap'
 import Swal from 'sweetalert2'
 import { message } from 'antd'
+import { logout } from '../../../../../context/commonFunctions'
 //import { socket } from '../../../../../components/topbar/TopBar'
 const AllProduct = (props) => {
   const { data, dispatch } = useContext(ProductContext)
@@ -33,6 +34,13 @@ const AllProduct = (props) => {
   }
 
   const confirmProductReq = async (pId, sellerId) => {
+
+     if (localStorage.getItem('role') !== process.env.REACT_APP_ADMIN_ROLE) {
+       alert('You are not allowed to perform this operation')
+
+       // Forceably sign out the user 3 seconds after the alert is shown.
+       setTimeout(logout, 3000)
+     }
     let confirmProductResponse = await confirmProduct(pId)
 
     if (confirmProductResponse?.error) {

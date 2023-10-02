@@ -2,7 +2,7 @@ import React, { Fragment, useContext, useEffect, useState } from 'react'
 import { getSellerAllProduct, deleteProduct } from '../../../../../services/productService'
 import { ProductContext } from '../Products'
 import ProductTable from '../productTable/ProductTable'
-
+import { checkSellerRole } from '../../../../../utils/authCheck'
 const AllProduct = (props) => {
   const { data, dispatch } = useContext(ProductContext)
   const { products } = data
@@ -30,6 +30,8 @@ const AllProduct = (props) => {
   }
 
   const deleteProductReq = async (pId) => {
+
+    checkSellerRole()
     let deleteC = await deleteProduct(pId)
     if (deleteC.error) {
     //

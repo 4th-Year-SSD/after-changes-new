@@ -1,7 +1,8 @@
 import React, { Fragment, useContext, useState, useEffect } from 'react'
 import { CategoryContext } from './index'
 import { editCategory, getAllCategory } from './FetchApi'
-
+import { logout } from '../../../context/commonFunctions'
+import { checkSellerRole } from '../../../utils/authCheck'
 const EditCategoryModal = () => {
   const { data, dispatch } = useContext(CategoryContext)
 
@@ -18,6 +19,7 @@ const EditCategoryModal = () => {
   }, [data.editCategoryModal.modal])
 
   const fetchData = async () => {
+    checkSellerRole()
     let responseData = await getAllCategory()
     if (responseData.Categories) {
       dispatch({
@@ -28,6 +30,7 @@ const EditCategoryModal = () => {
   }
 
   const submitForm = async () => {
+    checkSellerRole()
     dispatch({ type: 'loading', payload: true })
     let edit = await editCategory(cId, des, status)
     if (edit.error) {

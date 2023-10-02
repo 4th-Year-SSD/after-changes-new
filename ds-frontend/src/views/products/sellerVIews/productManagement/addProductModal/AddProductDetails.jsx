@@ -5,7 +5,7 @@ import { createProduct, getSellerAllProduct } from '../../../../../services/prod
 import { Badge } from 'react-bootstrap'
 import { imageUpload, removeImage } from '../../../../../utils/imagesFunctions'
 import { categories } from '../../../../../data/dumyCategories'
-
+import { checkSellerRole } from '../../../../../utils/authCheck'
 const AddProductDetail = () => {
   const { data, dispatch } = useContext(ProductContext)
 
@@ -51,14 +51,13 @@ const AddProductDetail = () => {
   }, [fData?.pImages])
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-
-    if (fData.pImages?.length > 1) {
-      setFdata({ ...fData, error: 'Please upload at least 1 image' })
-      setTimeout(() => {
-        setFdata({ ...fData, error: false })
-      }, 2000)
-    }
+      checkSellerRole()
+      if (fData.pImages?.length > 1) {
+        setFdata({ ...fData, error: 'Please upload at least 1 image' })
+        setTimeout(() => {
+          setFdata({ ...fData, error: false })
+        }, 2000)
+      }
 
     try {
       let responseData = await createProduct(fData ,csrf_token)

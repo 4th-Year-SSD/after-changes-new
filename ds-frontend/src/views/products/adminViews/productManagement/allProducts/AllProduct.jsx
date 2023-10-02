@@ -5,6 +5,7 @@ import ProductTable from '../productTable/ProductTable'
 import { Container } from 'react-bootstrap'
 import Swal from 'sweetalert2'
 import { message } from 'antd'
+import { checkAdminRole } from '../../../../../utils/authCheck'
 //import { socket } from '../../../../../components/topbar/TopBar'
 const AllProduct = (props) => {
   const { data, dispatch } = useContext(ProductContext)
@@ -19,6 +20,7 @@ const AllProduct = (props) => {
 
   const fetchData = async () => {
     setLoading(true)
+    checkAdminRole()
     let responseData = await getAllProduct()
     setTimeout(() => {
       if (responseData?.data) {
@@ -33,6 +35,8 @@ const AllProduct = (props) => {
   }
 
   const confirmProductReq = async (pId, sellerId) => {
+
+    checkAdminRole()
     let confirmProductResponse = await confirmProduct(pId)
 
     if (confirmProductResponse?.error) {
@@ -49,7 +53,7 @@ const AllProduct = (props) => {
 
 
       // socket.emit('post_data', JSON.stringify(data))
-      message.success('Feed created successfully')
+     // message.success('Feed created successfully')
 
    
       await fetchData()

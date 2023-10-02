@@ -3,6 +3,7 @@ import { ProductContext } from '../AdminProductsView'
 import { getAllProduct } from '../../../../../services/productService'
 import AwesomeSlider from 'react-awesome-slider'
 import { Col, Row } from 'react-bootstrap'
+import { checkAdminRole } from '../../../../../utils/authCheck'
 const buttonStyle = {
   borderRadius: '50%',
   backgroundColor: 'white',
@@ -10,10 +11,6 @@ const buttonStyle = {
   fontSize: '20px',
   color: 'black',
   margin: '10px 10px',
-}
-const contentStyle = {
-  color: 'white',
-  fontSize: '20px',
 }
 const bgImg = {
   position: 'absolute',
@@ -61,6 +58,7 @@ const ViewProductModal = (props) => {
   }, [data.viewProductModal])
 
   const fetchData = async () => {
+    checkAdminRole()
     let responseData = await getAllProduct()
     if (responseData) {
       dispatch({

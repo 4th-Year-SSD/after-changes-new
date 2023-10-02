@@ -8,11 +8,11 @@ export default function Home() {
       .put(`/user/${localStorage.getItem('user_id')}`, { csrf_token: csrf_token })
       .then((res) => {
         if (res.status === 201 || res.status === 200) {
-          //console.log(res)
+          console.log(res)
         } 
       })
       .catch((error) => {
-       // console.log(error)
+       console.log(error)
       })
       .then(() => {
         // always executed

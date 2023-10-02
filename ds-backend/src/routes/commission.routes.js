@@ -4,7 +4,7 @@ import {
   addCommission,
   updateCommission,
 } from "../controllers/commission.controller";
-import { doubleCsrfProtection ,csrfErrorHandler } from "../utils/csrf";
+import { doubleCsrfProtection ,csrfErrorHandler } from "../middleware/csrf";
 const commissionRouter = Router();
 
 commissionRouter .get("/", getCommission);

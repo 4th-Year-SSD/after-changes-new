@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import CryptoJS from "crypto-js"; // Import the crypto-js library
 import aggregatePaginate from "mongoose-aggregate-paginate-v2";
 
 const UserSchema = new mongoose.Schema({
@@ -62,6 +63,18 @@ const UserSchema = new mongoose.Schema({
   },
 });
 
+// Encryption function using CryptoJS
+function encryptField(field) {
+  const secretKey = "ThisIsASampleEncryptionKey";
+  return CryptoJS.AES.encrypt(field, secretKey).toString();
+}
+
+// Middleware to encrypt address and phone before saving
+UserSchema.pre("save", function (next) {
+  this.phone   = encryptField(this.phone);
+  this.address = encryptField(this.address);
+  next();
+});
 UserSchema.plugin(aggregatePaginate);
 
 const User = mongoose.model("User", UserSchema);

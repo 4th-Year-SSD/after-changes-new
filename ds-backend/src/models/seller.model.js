@@ -1,6 +1,5 @@
 import mongoose, { Schema } from "mongoose";
 
-
 const SellerSchema = new Schema(
   {
     products: [
@@ -21,4 +20,6 @@ const SellerSchema = new Schema(
   }
 );
 
+
 module.exports = mongoose.model(`Seller`, SellerSchema);
+

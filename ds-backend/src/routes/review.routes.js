@@ -11,7 +11,7 @@ import {
   getReviewByIdController,
   getReviewsController,
 } from "../controllers/review.controller";
-import { doubleCsrfProtection , csrfErrorHandler } from "../utils/csrf";
+import { doubleCsrfProtection , csrfErrorHandler } from "../middleware/csrf";
 const reviewRouter  = express.Router();
 
 reviewRouter.get("/", getAllReviewsController);

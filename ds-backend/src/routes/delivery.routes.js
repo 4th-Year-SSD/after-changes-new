@@ -8,7 +8,7 @@ import {
   updateDeliveryController,
   // deleteDeliveryController,
 } from "../controllers/delivery.controller";
-import { doubleCsrfProtection, csrfErrorHandler } from "../utils/csrf";
+import { doubleCsrfProtection, csrfErrorHandler } from "../middleware/csrf";
 
 
 const deliveryRouter = express.Router();

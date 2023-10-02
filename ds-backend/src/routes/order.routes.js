@@ -1,6 +1,6 @@
 const express = require("express");
 import { adminProtect, protect } from "../middleware/auth.js";
-import { doubleCsrfProtection, csrfErrorHandler } from "../utils/csrf";
+import { doubleCsrfProtection, csrfErrorHandler } from "../middleware/csrf.js";
 const {
   createOrder,
   getAllOrders,

@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 import aggregatePaginate from "mongoose-aggregate-paginate-v2";
+require("dotenv").config();
+
 
 const BuyerSchema = new mongoose.Schema({
   bank_details: {

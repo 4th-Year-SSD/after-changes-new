@@ -5,11 +5,7 @@ import asyncHandler from "./async";
 require('dotenv').config();
 export const protect = asyncHandler(async (req, res, next) => {
 
-  const token = req.headers.authorization
-    ? req.headers.authorization.startsWith("Bearer")
-      ? req.headers.authorization.split(" ")[1]
-      : null
-    : null;
+  const token = req.cookies.access_token ?? null;
   if (!token)
     return makeResponse({ res, status: 403, message: "Unauthorized" });
   const decodedUser = decodeJwtToken(token).data;

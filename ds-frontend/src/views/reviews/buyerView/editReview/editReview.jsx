@@ -15,7 +15,7 @@ import StarIcon from '@mui/icons-material/Star'
 import CloseIcon from '@mui/icons-material/Close'
 import IconButton from '@mui/material/IconButton'
 import { updateProductReview, updateSellerReview } from '../../../../services/reviewService'
-
+import { checkBuyerRole } from '../../../../utils/authCheck'
 
 export default function EditReviewCard({reviewDetails, isOpen, onClose}) {
   const [rating, setRating] = useState(reviewDetails.rating)
@@ -36,6 +36,7 @@ export default function EditReviewCard({reviewDetails, isOpen, onClose}) {
   }
 
   const handleUpdate = () => {
+    checkBuyerRole()
     const {user, ...review} = reviewDetails
     review.user = reviewDetails.user._id
     review.rating = rating

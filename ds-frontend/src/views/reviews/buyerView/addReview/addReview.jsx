@@ -19,6 +19,8 @@ import IconButton from '@mui/material/IconButton'
 import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
 import { createProductReview, createSellerReview } from '../../../../services/reviewService'
+import { checkBuyerRole } from '../../../../utils/authCheck'
+
 export default function AddReviewCard(reviewCategory) {
   const [open, setOpen] = useState(false)
   const [rating, setRating] = useState(0)
@@ -51,6 +53,7 @@ export default function AddReviewCard(reviewCategory) {
   }
 
   const handleSave = () => {
+    checkBuyerRole()
     const review = reviewCategory.reviewCategory
     review.rating = rating
     review.comment = comment

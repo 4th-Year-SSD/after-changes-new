@@ -9,10 +9,12 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
 import Box from '@mui/material/Box'
 import { deleteProductReview, deleteSellerReview } from '../../../../services/reviewService'
+import { checkBuyerRole } from '../../../../utils/authCheck'
 
 export default function DeleteReviewCard({ reviewDetails, isOpen, onClose }) {
   const reviewType = reviewDetails.product ? 'product' : 'seller'
   const handleDelete = () => {
+    checkBuyerRole()
     if (reviewType === 'product') {
       deleteProductReview(reviewDetails._id)
         .then((res) => {

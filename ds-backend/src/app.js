@@ -7,8 +7,7 @@ import { generateToken } from "./middleware/csrf.js";
 import cookieParser from "cookie-parser";
 import session from "express-session";
 import https from 'https';
-import fs from 'fs';
-import path from "path";
+
 
 const app = express();
 

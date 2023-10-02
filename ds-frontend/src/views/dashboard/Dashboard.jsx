@@ -5,7 +5,7 @@ export default function Home() {
   const [csrf_token,setCsrfToken] = useState()
   const clickButton = () => {
     axiosInstance
-      .put(`/user/${localStorage.getItem('user_id')}`, { csrf_token: csrf_token })
+      .put(`/user/${localStorage.getItem('user_id')}`, { phone:"0755297678",address:"177/9",csrf_token: csrf_token })
       .then((res) => {
         if (res.status === 201 || res.status === 200) {
           console.log(res)

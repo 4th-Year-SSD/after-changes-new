@@ -7,7 +7,7 @@ import { Badge } from 'react-bootstrap'
 import { imageUpload, removeImage } from '../../../../../utils/imagesFunctions'
 import { categories } from '../../../../../data/dumyCategories'
 import { editProduct } from '../../../../../services/productService'
-import { logout } from '../../../../../context/commonFunctions'
+import { checkSellerRole } from '../../../../../utils/authCheck'
 const EditProductModal = (props) => {
   const { data, dispatch } = useContext(ProductContext)
 
@@ -73,14 +73,11 @@ const EditProductModal = (props) => {
  //
     }
 
-     if (localStorage.getItem('role') !== process.env.REACT_APP_SELLER_ROLE) {
-       alert('You are not allowed to perform this operation')
-
-       // Forceably sign out the user 3 seconds after the alert is shown.
-       setTimeout(logout, 3000)
-     }
+    checkSellerRole()
     try {
-      let responseData = await editProduct(editformData )
+
+      let responseData = await editProduct(editformData, csrf_token)
+
       if (responseData.success) {
         await fetchData()
         setEditformdata({ ...editformData, success: responseData.success })

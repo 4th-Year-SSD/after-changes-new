@@ -23,7 +23,6 @@ export const loginUser = async ({ email, password }) => {
   delete user.password;
   return user;
 };
-
 export const googleUserSignIn = async ({ email, name }) => {
   const userExist = await getOneUser({ email }, true);
 
@@ -41,7 +40,6 @@ export const googleUserSignIn = async ({ email, name }) => {
 
   return await registerUser({ user, specificData });
 };
-
 // register user service
 export const registerUser = async ({ user, specificData }) => {
   // encrypt password

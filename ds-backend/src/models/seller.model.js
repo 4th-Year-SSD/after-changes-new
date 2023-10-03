@@ -20,5 +20,6 @@ const SellerSchema = new Schema(
   }
 );
 
+
 module.exports = mongoose.model(`Seller`, SellerSchema);
 

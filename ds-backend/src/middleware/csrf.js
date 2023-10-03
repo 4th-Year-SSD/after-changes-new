@@ -1,33 +1,24 @@
+require("dotenv").config();
 import { doubleCsrf } from "csrf-csrf";
+
 export const { invalidCsrfTokenError, generateToken, doubleCsrfProtection } =
   doubleCsrf({
-    // getSecret: () => process.env.CSRF_SECRET,
-    // cookieName: process.env.CSRF_COOKIE_NAME,
-    // cookieOptions: {
-    //   httpOnly: true,
-    //   sameSite: false,
-    //   secure: false,
-    //   maxAge: 3600,
-    // },
-
     getSecret: () => {
-      return "123456789";
+      return `${process.env.CSRF_COOKIE_SECRET}`;
     },
-    cookieName: "x-csrf-token",
+    cookieName: `${process.env.CSRF_COOKIE_NAME}`,
     getTokenFromRequest: (req) => {
- 
-  // Get the CSRF token from the header.
-  let csrfToken = req.headers["x-csrf-token"];
+      // Get the CSRF token from the header.
+      let csrfToken = req.headers["x-csrf-token"];
 
-  // If the CSRF token is not in the header, check the body.
-  if (csrfToken === undefined) {
-    csrfToken = (req.body?.csrf_token)?.token;;
+      // If the CSRF token is not in the header, check the body.
+      if (csrfToken === undefined) {
+        csrfToken = req.body?.csrf_token?.token;
+      }
 
-  }
-
-  // Return the CSRF token.
-  return csrfToken
-}
+      // Return the CSRF token.
+      return csrfToken;
+    },
   });
 
 // Error handling, validation error interception

@@ -22,10 +22,10 @@ app.use(
 
 app.use(
   session({
-    secret: "some-secret-key", // Change this to a real secret in production
+    secret: `${process.env.SESSION_SECRET}`, 
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: true }, // Set secure to true in production if using HTTPS
+    cookie: { secure: true }, 
   })
 );
 

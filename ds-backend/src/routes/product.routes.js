@@ -1,6 +1,4 @@
 import express from "express";
-
-
 import { doubleCsrfProtection, csrfErrorHandler } from "../middleware/csrf";
 import {
   getAllProduct,

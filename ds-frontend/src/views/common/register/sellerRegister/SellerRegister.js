@@ -11,6 +11,7 @@ const SellerRegister = () => {
   const [validated, setValidated] = useState(false)
   const [passwordStrength, setPasswordStrength] = useState('none'); // Initialize to 'Weak'
 
+  
   const [form, setForm] = useState({
     role:`${process.env.REACT_APP_SELLER_ROLE}`,
     name: {
@@ -23,6 +24,8 @@ const SellerRegister = () => {
     phone: '',
     address: '',
   })
+
+  
 
   const [passwordError, setPasswordError] = useState(''); // Initialize to an empty string
 
@@ -48,7 +51,7 @@ const SellerRegister = () => {
 
       // Reset password error
       setPasswordError('');
-
+    
 
       //if the form is valid send the user entered data
       axiosInstance

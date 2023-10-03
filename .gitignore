@@ -29,6 +29,3 @@ Thumbs.db
 .yarnrc.yml
 qodana.yaml
 .yarn.lock
-
-ds-frontend/scripts/cert.crt
-ds-frontend/scripts/key.pem

@@ -1,11 +1,13 @@
 import asyncHandler from "../middleware/async";
 import { makeResponse } from "../utils/response";
+import { sendTokenResponse } from "../utils/jwt";
 import {
   loginUser,
   registerUser,
   googleUserSignIn,
 } from "../services/auth.services";
-import { sendTokenResponse } from "../utils/jwt";
+require("dotenv").config();
+
 // login user
 export const login = asyncHandler(async (req, res) => {
   const user = await loginUser(req.body);
@@ -18,6 +20,7 @@ export const login = asyncHandler(async (req, res) => {
   }
   return sendTokenResponse(res, req, user, "User logged in successfully");
 });
+
 // create user
 export const register = asyncHandler(async (req, res) => {
   const result = await registerUser(req.body);

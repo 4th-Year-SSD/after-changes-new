@@ -19,14 +19,12 @@ export default function Login() {
     e.preventDefault()
     //login user
     axiosInstance
-      .post('/auth/login', { email, password })
+      .post('/auth/login', { email, password }, {withCredentials: true} )
       .then((res) => {
         if (res.status === 200) {
           //set localstorage
 
           localStorage.setItem('role', res.data.data.user.role)
-          localStorage.setItem('access_token', res.data.data.access_token)
-
           localStorage.setItem('name', res.data.data.user.name.first_name)
           localStorage.setItem('email', res.data.data.user.email)
           localStorage.setItem('authenticated', true)
@@ -37,10 +35,10 @@ export default function Login() {
           setPassword('')
 
           if (res.data.data.user.role === 'SELLER') {
-            localStorage.setItem('id', res.data.data.user.seller._id)
+            localStorage.setItem('id', res.data.data.user?.seller?._id)
           }
           if (res.data.data.user.role === 'BUYER') {
-            localStorage.setItem('id', res.data.data.user.buyer._id)
+            localStorage.setItem('id', res.data.data.user?.buyer?._id)
           }
           //check the user role
           if (res.data.data.user.role === 'ADMIN') {

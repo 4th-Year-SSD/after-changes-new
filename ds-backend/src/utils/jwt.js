@@ -4,11 +4,6 @@ require("dotenv").config();
 export const sendTokenResponse = async (res, req, user, message) => {
   const accessToken = generateJWTToken(user);
 
-  // res.status(200).json({
-  //   data: { user, access_token: accessToken },
-  //   message,
-  // });
-  console.log(accessToken)
   res.status(200).cookie('access_token',accessToken,{httpOnly: true}).json({
     data:{user}
   })

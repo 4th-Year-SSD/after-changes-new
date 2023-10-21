@@ -33,6 +33,11 @@ const orderSchema = new mongoose.Schema(
     },
     totalPrice: {
       type: Number,
+      required: true,
+      // validate: {
+      //   validator: (v) => {
+      //     return /^[a-zA-Z]+$/gm.test(v);
+      //   },
     },
   },
   { timestamps: true }

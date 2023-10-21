@@ -7,6 +7,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     enum: ['BUYER', 'ADMIN','SELLER'],
     default: 'BUYER',
+    required: [true, "Role is required"],
   },
   buyer: {
     type: mongoose.Schema.Types.ObjectId,
@@ -24,10 +25,18 @@ const UserSchema = new mongoose.Schema({
     first_name: {
       type: String,
       required: [true, "First name is required"],
+      // validate: {
+      //   validator: (v) => {
+      //     return /^[a-zA-Z]+$/gm.test(v);
+      //   },
     },
     last_name: {
       type: String,
       required: [true, "Last name is required"],
+      // validate: {
+      //   validator: (v) => {
+      //     return /^[a-zA-Z]+$/gm.test(v);
+      //   },
     },
   },
   email: {
@@ -35,14 +44,28 @@ const UserSchema = new mongoose.Schema({
     required: [true, "email is required"],
     unique: [true, "Email should be unique"],
     lowercase: [true, "Email should be lowercase"],
+    validate: {
+      validator: (v) => {
+        return /\S+@\S+\.\S+/.test(v);
+      },
+      message: (props) => `${props.value} is not a valid email!`,
+    },
   },
   password: {
     type: String,
-
+    required: [true, "password is required"],
+    minlength: [8, "Password should be atleast 8 characters long"],
+    //add password validation
+    validate: {
+      validator: (v) => {
+        return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm.test(v);
+      },
+      message: (props) =>
+        `Password should contain atleast one uppercase, one lowercase and one number`,
+    },
   },
   phone: {
     type: String,
-
     validate: {
       validator: (v) => {
         return /\d{10}/gm.test(v);
@@ -52,7 +75,14 @@ const UserSchema = new mongoose.Schema({
   },
   address: {
     type: String,
-   
+    required: [true, "Address is required"],
+    validate: {
+      validator: (v) => {
+        return /^[a-zA-Z0-9\s,'-]*$/gm.test(v);
+      },
+      message: (props) =>
+        `${props.value} is not a valid address!`,
+    },
   },
   is_active: {
     type: Boolean,

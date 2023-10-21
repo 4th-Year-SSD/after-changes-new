@@ -15,10 +15,18 @@ const PaymentSchema = new Schema(
     payment_method: {
       type: String,
       required: true,
+      // validate: {
+      //   validator: (v) => {
+      //     return /^[a-zA-Z]+$/gm.test(v);
+      //   },
     },
     status_code: {
       type: String,
       required: true,
+      // validate: {
+      //   validator: (v) => {
+      //     return /^[a-zA-Z]+$/gm.test(v);
+      //   },
     },
     amount: {
       type: Number,
